@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Airline Ticket - Best Deals & Discounts on Flight Tickets</title>
+
+
+    <!-- CSS only -->
+    <link href="/html/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" as="style" rel="stylesheet">
+    <link rel="stylesheet" href="../html/css/MasterStyles.css">
+    <link rel="stylesheet" href="../html/css/style.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- JavaScript Bundle with Popper -->
+    <script src="/html/js/bootstrap.bundle.min.js"></script>
+    <script src="../html/js/MasterScript.js"></script>
+    <!-- <script src="../html/js/FilterScript.js"></script>
+     <script src="../html/js/FlightScript.js"></script> -->
+    <script src="../html/js/custom.js"></script>
+</head>
+
+<body>
+    <div class="modal fade animated fadeInDown" id="mdlLogin" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body position-relative full-height" style="height:auto;">
+                    <button type="button" class="close position-relative" data-dismiss="modal"><i class="material-icons">close</i></button>
+                    <div id="login_otp" class="loginotp" style="width:100%; display: none;">
+                        <form name="frmLoginOTPForm" class="p-5">
+                            <h3 class="text-center font-weight-bold"><img src="../html/image/site_icon.png" class="lazyload">
+                                <span class="text-uppercase align-middle">Login With OTP</span>
+                            </h3>
+                            <div class="col-md-12 input-field p-0 mt-4">
+                                <input name="txtMobileNumber" type="tel" maxlength="10" class="font-weight-700 lbl-large clsEnter" id="txtMobileNumber" tabindex="1" oncopy="return false" oncut="return false" onpaste="return false" ondrag="return false" ondrop="return false" inputtype="mobile"
+                                    autocomplete="off">
+                                <label for="txtMobileNumber" class="active">MobileNumber </label>
+                                <i class="material-icons right text-muted lbl-large showPassword">vpn_key</i>
+                            </div>
+                            <div class="col-md-12 input-field p-0 mt-2">
+                            </div>
+                            <div class="col-md-12 p-0 mt-4">
+                                <button type="submit" class="btn btn-lg btn-primary w-100 text-center font-weight-bold lbl-large" tabindex="3" id="btnOTP">
+                                        Proceed
+                                    </button>
+                                <br>
+                                <div class="col-md-12 p-0 mt-2 text-center">
+                                    <a href="javascript:void(0);" class="float-left">Login with password</a>
+                                    <a href="" class="float-right">Resend OTP</a>
+                                    <br><br>
+                                    <div class="">00 : Miniutes left to enable Re-send OTP</div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div id="login_form" class="login" style="width:100%;">
+                        <form name="frmLoginForm" class="p-5">
+                            <h3 class="text-center font-weight-bold">
+                                <img data-src="../html/image/site_icon.png" class="lazyload">
+                                <span class="text-uppercase align-middle">Customer Login</span>
+                            </h3>
+                            <div class="col-md-12 input-field p-0 mt-5">
+                                <input name="txtMobileNumber" id="txtMobileNumber1" type="tel" maxlength="10" class="font-weight-700 lbl-large clsEnter" tabindex="1" oncopy="return false" oncut="return false" onpaste="return false" ondrag="return false" ondrop="return false" inputtype="mobile"
+                                    autocomplete="off">
+                                <label for="txtMobileNumber1">Mobile Number</label>
+                                <i class="material-icons right text-muted lbl-large showPassword">account_circle</i>
+                            </div>
+                            <div class="col-md-12 input-field p-0 mt-4">
+                                <input name="txtPassword" type="password" class="font-weight-700 lbl-large clsEnter" inputtype="numcharspecial" minlen="8" oncopy="return false" oncut="return false" onpaste="return false" ondrag="return false" ondrop="return false" id="txtPassword1"
+                                    tabindex="1" autocomplete="off">
+                                <label for="txtPassword1">Password </label>
+                                <i class="material-icons right text-muted lbl-large showPassword ">vpn_key</i>
+                                <br>
+                            </div>
+                            <div class="col-md-12 input-field p-0 mt-2">
+                                <!-- ngIf: Login.Error!=null -->
+
+                            </div>
+                            <div class="col-md-12 p-0 mt-2">
+                                <a class="right" onclick="showHideForm('recover-password','login_form')">Forgot your password?</a>
+                            </div>
+                            <div class="col-md-12 p-0 mt-5">
+                                <button class="btn btn-lg btn-primary w-100 text-center font-weight-bold lbl-large" tabindex="3" id="btnLogin">
+                                        Sign In
+                                    </button>
+                            </div>
+                            <div class="col-md-12 text-center mt-3">
+                                <span class="lbl-large lbl-bold">OR</span>
+                            </div>
+                            <div class="col-md-12 p-0 mt-4">
+                                <button class="btn btn-lg btn-outline-primary w-100 text-center font-weight-bold lbl-large" tabindex="4" id="btnLogin1" onclick="showHideForm('login_otp','login_form')">
+                                        Request OTP
+                                    </button>
+                            </div>
+                            <div class="col-md-12 p-0 mt-5 text-center">
+                                <span class="pr-3 text-muted">Not a Member?</span>
+                                <a id="dvRequestPassword" ng-click="ShowSignUp();" class="btn btn-md bg-light text-dark font-weight-bold " tabindex="4">
+                                        Sign Up
+                                    </a>
+                            </div>
+                        </form>
+
+                    </div>
+                    <div id="recover-password" class="forgetpwd" style="width:100%; display: none;">
+                        <form name="frmForgotForm" class="p-5">
+                            <h3 class="text-center font-weight-bold">
+                                <img src="../html/image/site_icon.png" class="lazyload">
+                                <span class="text-uppercase align-middle">Forgot Password</span>
+                            </h3>
+                            <div class="col-md-12 input-field p-0 mt-5">
+                                <input name="txtMobileNumber" type="tel" maxlength="10" class="font-weight-700 lbl-large clsEnter" id="txtMobileNumber" tabindex="1" oncopy="return false" oncut="return false" onpaste="return false" ondrag="return false" ondrop="return false" inputtype="mobile"
+                                    autocomplete="off">
+                                <label for="txtMobileNumber"></label>
+                                <i class="material-icons right text-muted lbl-large showPassword">account_circle</i>
+                            </div>
+
+                            <div class="col-md-12 input-field p-0 mt-2">
+                            </div>
+                            <div class="col-md-12 p-0 mt-4">
+                                <button type="submit" class="btn btn-lg btn-primary w-100 text-center font-weight-bold lbl-large" tabindex="3" id="btnForgotPassword">
+                                        Submit
+                                    </button>
+                                <div class="col-md-12 p-0 mt-2 text-center">
+                                    <a onclick="showHideForm('recover-password','login_form')">I remember my password</a>
+                                </div>
+                            </div>
+                            <div class="col-md-12 p-0 mt-4">
+                                <span class=""></span>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="loader text-center" style="top:50%;left:50%; display: none;">
+                        <img src="../html/image/site_icon.png" class="lazyload">
+                        <span class="h3 text-center text-uppercase font-weight-bold align-middle">
+                                Please Wait
+                            </span>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <img src="../html/image/loader.gif" class="lazyload">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 text-muted ng-binding">
+                                We are authenticate your account
+                            </div>
+                        </div>
+                    </div>
+                    <div class="signup" style=" height:auto; display: none;">
+                        <form name="frmSignupForm" class="p-5">
+                            <h3 class="text-center font-weight-bold"><img src="../html/image/site_icon.png" class="lazyload">
+                                <span class="text-uppercase align-middle">Sign Up</span>
+                            </h3>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="col-md-12 input-field p-0 mt-3" style="margin-top:-10px" tabindex="1">
+                                        <select class="lbl-large clsEnter" style="border-bottom: 1px solid #9e9e9e;" id="txtName" tabindex="1" autocomplete="off"> 
+                                                <option ng-hide="" value="" class="">Select</option>
+                                                <option value="Mr" selected="selected">Mr</option>
+                                                <option value="Ms">Ms</option>
+                                                <option value="Mrs">Mrs</option>
+                                            </select>
+                                        <label for="txtMobileNumber" style="margin-top:-25px" class="ng-binding">
+                                                *
+                                                <fv label=""></fv>
+                                            </label>
+                                    </div>
+                                    FV
+                                    <div class="col-md-12 input-field p-0 mt-3">
+                                        <input type="text" class="font-weight-700 lbl-large clsEnter" style="text-transform:uppercase;width:95%" id="txtName" tabindex="2" inputtype="char" oncopy="return false" oncut="return false" onpaste="return false" ondrag="return false" ondrop="return false"
+                                            autocomplete="off">
+                                        <label for="txtMobileNumber" class="ng-binding">*</label>
+                                        <i class="material-icons right text-muted lbl-large showPassword">account_circle</i>
+                                    </div>
+                                    <div class="col-md-12 input-field p-0 mt-3">
+                                        <input type="text" class="font-weight-700 lbl-large clsEnter" style="text-transform:uppercase;width:95%" id="txtName" tabindex="3" inputtype="char" oncopy="return false" oncut="return false" onpaste="return false" ondrag="return false" ondrop="return false"
+                                            autocomplete="off">
+                                        <label for="txtMobileNumber" class="ng-binding">*</label>
+                                        <i class="material-icons right text-muted lbl-large showPassword">account_circle</i>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="col-md-12 input-field p-0">
+                                        <input type="tel" maxlength="10" class="font-weight-700 lbl-large clsEnter" style="width:95%" id="txtMobile" tabindex="4" inputtype="mobile" oncopy="return false" oncut="return false" onpaste="return false" ondrag="return false" ondrop="return false"
+                                            autocomplete="off">
+                                        <label for="txtPassword" class="ng-binding">* </label>
+                                        <i class="material-icons right text-muted lbl-large showPassword ">contacts</i>
+                                    </div>
+                                    <div class="col-md-12 input-field p-0 mt-3">
+                                        <input type="email" class="font-weight-700 lbl-large clsEnter " style="width:95%" inputtype="mail" id="txtEmail" tabindex="5" oncopy="return false" oncut="return false" onpaste="return false" ondrag="return false" ondrop="return false" autocomplete="off">
+                                        <label for="txtPassword" class="ng-binding">* </label>
+                                        <i class="material-icons right text-muted lbl-large showPassword ">email</i>
+                                    </div>
+                                    <div class="col-md-12 mb-3 mt-3 p-0">
+                                        <label class="m-0" for="AddGST">
+                                                <input type="checkbox" id="AddGST" class="filled-in">
+                                                <span class="lbl-bold lbl-medium">
+                                                    Add GST Details
+                                                </span>
+                                            </label>
+                                    </div>
+                                    <div class="col-12 col-md-12 input-field p-0 mt-3">
+                                        <input type="text" class="font-weight-700 lbl-large clsEnter" style="width:95%" id="txtEmail" tabindex="6" oncopy="return false" oncut="return false" onpaste="return false" ondrag="return false" ondrop="return false">
+                                        <label for="txtPassword">Company Name</label>
+                                        <i class="material-icons right text-muted lbl-large showPassword ">account_box</i>
+                                    </div>
+                                    <div class="col-12 col-md-12 input-field p-0 mt-3">
+                                        <input type="text" class="font-weight-700 lbl-large clsEnter" style="width:95%" id="txtEmail" tabindex="6" oncopy="return false" oncut="return false" onpaste="return false" ondrag="return false" ondrop="return false">
+                                        <label for="txtPassword">GST Number</label>
+                                        <i class="material-icons right text-muted lbl-large showPassword ">account_balance</i>
+                                    </div>
+                                    <div class="col-12 col-md-12 input-field p-0 mt-3">
+                                        <input type="text" class="font-weight-700 lbl-large clsEnter" style="width:95%" id="txtEmail" tabindex="6" oncopy="return false" oncut="return false" onpaste="return false" ondrag="return false" ondrop="return false">
+                                        <label for="txtPassword">GST Address</label>
+                                        <i class="material-icons right text-muted lbl-large showPassword ">home</i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-md-6 p-0 mt-4 text-center">
+                                    <span class="pr-3 text-muted">Do you have an Account?</span><br> <a id="dvRequestPassword" href="javascript:void(0)" class="font-weight-bold " tabindex="7">Click here to Login</a>
+                                </div>
+                                <div class="col-md-6 p-0 mt-4">
+                                    <button class="btn btn-lg btn-primary w-100 text-center font-weight-bold lbl-large" tabindex="8" id="btnsignUp">
+                                            Sign Up
+                                        </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="ConfirmationModal" class="modal modal-alert" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false" aria-modal="true">
+        <div class="modal-dialog alert-dialog">
+            <div class="modal-content alert-modal">
+                <div class="modal-header">
+                    <i class="material-icons align-middle">notifications_active</i>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12"><span class="lbl-medium text-primary" id="ConfirmationMsg">Use this option if you are, a serving/retired personnel of the Indian Armed Forces or Indian Paramilitary Forces. You may also select this option if you are valid Dependent (Spouse/Child/Parent) of a serving/retired Indian Armed Forces and Indian Paramilitary Forces Personnel.<b> Please note valid military ID will be required for all passengers at Airline's check-in counter for tickets booked using this option.</b></span></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-warning" id="btnConfirmOKAction">OK</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCEL</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <header class="header bg-white sticky-top">
+        <div class="container">
+            <div class="row m-0 d-flex justify-content-between">
+                <div class="col-6 col-sm-5 col-md-auto align-self-center p-0">
+                    <h1><a href="home.html">Airline Ticket</a></h1>
+                </div>
+                <div class="col-6 col-sm-7 col-md-auto ml-0 valign-wrapper-sm p-0">
+                    <div class="d-flex align-items-center">
+                        <div class="ml-auto  loginmenu">
+                            <div class="d-sm-inline-block ml-sm-auto">
+                                <ul class="list-inline mb-0 valign-wrapper">
+                                    <li class="list-inline-item mr-0 hide-on-med-and-down">
+                                        <div class="d-inline float-right pr-3 contact_icon">
+                                            <a><img data-src="../html/image/icon_call.png" style="width: 28px;height: 28px;" class=" ls-is-cached lazyloaded" src="../html/image/icon_call.png"></a>
+                                        </div>
+                                        <div class="d-inline float-left contact_text">
+                                            <p class="mb-0 mt-0 text-gray text-right">Book Online or Call Us 24/7</p>
+                                        </div>
+                                    </li>
+                                    <li class="list-inline-item mr-0 hide-on-med-and-down">
+                                        <button class="btn btn-light login-text border-0 shadow-none pl-2 pr-2" type="button">
+                                                <i class="material-icons text-gray">
+                                                    <img data-src="../html/image/gst.png"  class=" ls-is-cached lazyloaded" src="../html/image/gst.png">
+                                                </i>
+                                                <br>
+                                                Add GST
+                                            </button>
+                                    </li>
+                                    <li class="list-inline-item mr-0 hide-on-med-and-down">
+                                        <button class="btn btn-light login-text border-0 shadow-none pl-2 pr-2" type="button">
+                                                <i class="material-icons text-gray">
+                                                    <img data-src="../html/image/icon_mytrip.png" class=" ls-is-cached lazyloaded" src="../html/image/icon_mytrip.png">
+                                                </i>
+                                                <br>
+                                                My Trip
+                                            </button>
+                                    </li>
+                                    <li class="list-inline-item mr-0 hide-on-med-and-down">
+                                        <div class="dropdown dropleft">
+                                            <button ng-click="LoadPage('Contact')" class="btn dropdown-toggle btn-light login-text border-0 shadow-none pl-2 pr-2" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <i class="material-icons text-gray">
+                                                        <img data-src="../html/image/icon_contact.png" class=" ls-is-cached lazyloaded" src="../html/image/icon_contact.png">
+                                                    </i>
+                                                    <br>
+                                                    Support
+                                                </button>
+
+                                        </div>
+                                    </li>
+                                    <li class="list-inline-item mr-0 ng-scope">
+                                        <div class="dropdown dropdown">
+                                            <button class="btn dropdown-toggle btn-light login-text border-0 shadow-none pl-2 pr-2" type="button" id="dropdownMenusignup" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="#666666" viewBox="0 0 24 24">
+                                                        <path d="M9.602 3.7c-1.154 1.937-.635 5.227 1.424 9.025.93 1.712.697 3.02.338 3.815-.982 2.178-3.675 2.799-6.525 3.456-1.964.454-1.839.87-1.839 4.004h-1.995l-.005-1.241c0-2.52.199-3.975 3.178-4.663 3.365-.777 6.688-1.473 5.09-4.418-4.733-8.729-1.35-13.678 3.732-13.678 3.321 0 5.97 2.117 5.97 6.167 0 3.555-1.949 6.833-2.383 7.833h-2.115c.392-1.536 2.499-4.366 2.499-7.842 0-5.153-5.867-4.985-7.369-2.458zm13.398 15.3h-3v-3h-2v3h-3v2h3v3h2v-3h3v-2z">
+                                                        </path>
+                                                    </svg>
+                                                    <br>
+                                                    <span class="ng-scope">Sign Up </span>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 24 24">
+                                                        <path d="M0 7.33l2.829-2.83 9.175 9.339 9.167-9.339 2.829 2.83-11.996 12.17z">
+                                                        </path>
+                                                    </svg>
+                                                    
+                                                </button>
+                                            <div class="dropdown-menu pointer indexhome" aria-labelledby="dropdownMenusignup">
+                                                <a class="dropdown-item pointer" href="javascript:void(0);">Customer Signup</a>
+                                                <a class="dropdown-item pointer" href="javascript:void(0);">Corporate Signup</a>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="list-inline-item mr-0 ng-scope">
+                                        <div class="dropdown dropdown">
+                                            <button class="btn dropdown-toggle btn-light login-text border-0 shadow-none pl-2 pr-2" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <i class="material-icons text-gray">
+                                                        <img data-src="../html/image/icon_user.png" class=" ls-is-cached lazyloaded" src="../html/image/icon_user.png">
+                                                    </i>
+                                                    <br>
+                                                    <span class="ng-scope">Sign In </span>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 24 24">
+                                                        <path d="M0 7.33l2.829-2.83 9.175 9.339 9.167-9.339 2.829 2.83-11.996 12.17z"></path>
+                                                    </svg>
+                                                </button>
+                                            <div class="dropdown-menu pointer indexhome" aria-labelledby="dropdownMenuButton">
+                                                <a class="dropdown-item pointer" href="javascript:void(0);">Customer Login</a>
+                                                <a class="dropdown-item pointer" href="javascript:void(0);">Corporate Login</a>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="loginmenu">
+                        <ul class="login_nav_wrapper">
+                            <li class="contact_wrapper">
+                                <div class="contact_info">
+                                    <h6>+91 76 700 700 70</h6>
+                                    <p>Book Online or Call Us 24/7</p>
+                                </div>
+                                <div class="contact_icon">
+                                    <a href="javascript:void(0);">
+                                        <img src="../html/image/icon_call.png" alt="">
+                                    </a>
+                                </div>
+                            </li>
+                            <li class="login_text">
+                                <button class="login_btn" data-toggle="modal" data-target="#mdlLogin">
+                                    <img src="../html/image/gst.png" alt="">
+                                    Add GST
+                                </button>
+                            </li>
+                            <li class="login_text">
+                                <button class="login_btn" data-toggle="modal" data-target="#mdlLogin">
+                                    <img src="../html/image/icon_mytrip.png" alt="">
+                                    My Trip
+                                </button>
+                            </li>
+                            <li class="login_text">
+                                <button class="login_btn">
+                                    <img src="../html/image/icon_contact.png" alt="">
+                                    Support
+                                </button>
+                            </li>
+                            <li class="login_text">
+                                <div class="dropdown">
+                                    <button class="login_btn">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="#666666" viewBox="0 0 24 24" class="icon">
+                                            <path d="M9.602 3.7c-1.154 1.937-.635 5.227 1.424 9.025.93 1.712.697 3.02.338 3.815-.982 2.178-3.675 2.799-6.525 3.456-1.964.454-1.839.87-1.839 4.004h-1.995l-.005-1.241c0-2.52.199-3.975 3.178-4.663 3.365-.777 6.688-1.473 5.09-4.418-4.733-8.729-1.35-13.678 3.732-13.678 3.321 0 5.97 2.117 5.97 6.167 0 3.555-1.949 6.833-2.383 7.833h-2.115c.392-1.536 2.499-4.366 2.499-7.842 0-5.153-5.867-4.985-7.369-2.458zm13.398 15.3h-3v-3h-2v3h-3v2h3v3h2v-3h3v-2z">
+                                            </path>
+                                        </svg>
+                                        <span>Sign Up</span>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 24 24">
+                                            <path d="M0 7.33l2.829-2.83 9.175 9.339 9.167-9.339 2.829 2.83-11.996 12.17z"></path>
+                                        </svg>
+                                    </button>
+                                    <div class="dropdown_menu">
+                                        <a href="javascript:void(0);" class="dropdown-item">Customer Signup</a>
+                                        <a href="javascript:void(0);" class="dropdown-item">Corporate Signup</a>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="login_text">
+                                <div class="dropdown">
+                                    <button class="login_btn">
+                                        <img src="../html/image/icon_user.png" alt="">
+                                        <span>Sign In</span>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 24 24">
+                                            <path d="M0 7.33l2.829-2.83 9.175 9.339 9.167-9.339 2.829 2.83-11.996 12.17z"></path>
+                                        </svg>
+                                    </button>
+                                    <div class="dropdown_menu">
+                                        <a href="javascript:void(0);" class="dropdown-item">Customer Signup</a>
+                                        <a href="javascript:void(0);" class="dropdown-item">Corporate Signup</a>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div> -->
+            </div>
+        </div>
+    </header>
+    <section class="bg-primary" ng-hide="IsBlogSearch">
+        <div class="container">
+            <div class="row m-0 indexhome">
+                <nav class="main-menu static-top navbar navbar-expand-lg fixed-top mb-0 p-0" style="box-shadow:none;z-index:1019; background-color:transparent">
+                    <button class="navbar-toggler bg-primary btn-floating ml-auto hide" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                            <i class="material-icons">menu</i>
+                        </button>
+                    <div class="collapse navbar-collapse valign-wrapper align-self-start hide-on-small-and-down" id="navbarCollapse">
+                        <div id="navigation" class="navbar-nav w-100 menu-response indexhome">
+                            <ul class="navbar-nav mr-auto" id="mainmenu">
+
+                                <li ng-show="Config.ProductMenu.Bus" class="nav-item animated fadeInDown ng-hide" data-animation="fadeInDown" data-animation-delay="0.1s" style="animation-delay: 0.1s; opacity: 1;">
+                                    <a class="nav-link lbl-medium text-uppercase pl-4 pr-4 bus" roboto_font="" href="BusSearch">Bus</a>
+                                </li>
+                                <li ng-show="Config.ProductMenu.Holidays" class="nav-item animated fadeInDown  ng-hide" data-animation="fadeInDown" data-animation-delay="0.1s" style="animation-delay: 0.1s; opacity: 1;">
+                                    <a class="nav-link lbl-medium text-uppercase pl-4 pr-4 holiday roboto_font" href="Package">Holidays</a>
+                                </li>
+                                <li ng-show="Config.ProductMenu.Recharge" class="nav-item animated fadeInDown  ng-hide" data-animation="fadeInDown" data-animation-delay="0.1s" style="animation-delay: 0.1s; opacity: 1;">
+                                    <a class="nav-link lbl-medium text-uppercase pl-4 pr-4 disabled roboto_font" href="#">Recharge</a>
+                                </li>
+                                <li ng-show="Config.ProductMenu.VISA" class="nav-item animated fadeInDown  ng-hide" data-animation="fadeInDown" data-animation-delay="0.1s" style="animation-delay: 0.1s; opacity: 1;">
+                                    <a class="nav-link lbl-medium text-uppercase pl-4 pr-4 disabled roboto_font" href="#">VISA Process</a>
+                                </li>
+                                <li ng-show="Config.ProductMenu.Insurance" class="nav-item animated fadeInDown  ng-hide" data-animation="fadeInDown" data-animation-delay="0.1s" style="animation-delay: 0.1s; opacity: 1;">
+                                    <a class="nav-link lbl-medium text-uppercase pl-4 pr-4 insurance roboto_font" href="InsuranceSearch">Insurance</a>
+                                </li>
+                            </ul>
+
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </section>
+    <div class="divider bg-primary-dark"></div>
+    <div class="flight_booking_section">
+        <div class="container">
+            <div class="row no-gutters">
+                <div class="col-12 col-md-12">
+                    <div class="row m-0 mt-4">
+                        <div class="col-12 col-md-8 animate fadeLeft">
+                            <div class="row">
+                                <div class="col-12 col-md-12">
+                                    <div class="card shadow-sm">
+                                        <div class="card-header p-2 pointer">
+                                            <i class="material-icons btn-floating disabled btn-small text-primary disabled">flight</i>
+                                            <span class="lbl-bold lbl-large">FLIGHT DETAILS</span>
+                                            <span class="lbl-large right pointer"><i class="material-icons">keyboard_arrow_down</i></span>
+                                            <a class="text-right pointer right" href="javascript:void(0);">Change Flight</a>
+                                        </div>
+                                        <div class="card-body pt-0">
+                                            <div class="row">
+                                                <div class="col-12 col-md-12">
+                                                    <div class="divider bg-primary row m-0"></div>
+                                                    <div class="divider bg-primary row m-0"></div>
+                                                    <div class="row m-2">
+                                                        <div class="col-6 col-md-6">
+                                                            <span class="lbl-medium font-weight-bold">Contact Information  </span>
+                                                        </div>
+                                                        <div class="col-6 col-md-6 text-right">
+                                                            <span class="user_info">
+                                                            You can quickly fill below details by
+                                                            <a href="javascript:void(0);" class="btn-link font-weight-bold ">Login</a>
+                                                        </span>
+                                                        </div>
+                                                    </div>
+                                                    <form action="">
+                                                        <div class="row m-0 bg-white-pearl d-flex align-items-end pt-2 pb-3">
+                                                            <div class="col-12 col-md-12 col-sm-12">
+                                                                <span class="small text-muted">Your ticket and flight info will be sent here</span>
+                                                            </div>
+                                                            <div class="col-12 col-md-4 col-sm-6">
+                                                                <label class="text-muted font-weight-bold" alt="Pax Mobile Number *">Mobile Number</label>
+                                                                <input class="border border-radius-10 pl-2 bg-white" type="tel" placeholder="Mobile Number * " maxlength="10" inputtype="mobile ">
+                                                            </div>
+                                                            <div class="col-12 col-md-4 col-sm-6">
+                                                                <label class="text-muted font-weight-bold" alt="Pax Email ID *">Email ID</label>
+                                                                <input class="border border-radius-10 pl-2 bg-white" type="email" placeholder="Email ID *" inputtype="mail">
+                                                            </div>
+                                                            <div class="col-12 col-md-4">
+                                                                <button class="btn btn-primary mb-1 float-right">Continue</button>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12 col-md-12">
+                                    <div class="card shadow-sm">
+                                        <div class="card-header p-2 pointer">
+                                            <i class="material-icons btn-floating disabled btn-small text-primary disabled">supervisor_account</i>
+                                            <span class="lbl-bold lbl-large">TRAVELLER DETAILS</span>
+                                            <span class="lbl-large right pointer">
+                                            <i class="material-icons">keyboard_arrow_down</i>
+                                        </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12 col-md-12">
+                                    <div class="card shadow-sm">
+                                        <div class="card-header p-2 pointer">
+                                            <i class="material-icons btn-floating disabled btn-small text-primary disabled">account_balance_wallet</i>
+                                            <span class="lbl-bold lbl-large">PAYMENT</span>
+                                            <span class="lbl-large right"><i class="material-icons ">keyboard_arrow_down</i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4 animate fadeRight">
+                            <div class="row">
+                                <div class="col-12 col-sm-6 col-md-12">
+                                    <div class="card shadow-sm">
+                                        <div class="card-header p-2">
+                                            <div class="row">
+                                                <div class="col-12 col-md-6">
+                                                    <span class="lbl-bold lbl-large">Fare Summary</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-body p-0">
+                                            <div class="row border-bottom pt-2 pb-2 m-0">
+                                                <div class="col-7 col-md-6 font-weight-bold">
+                                                    <a href="javascript:void(0);">Base Fare </a>
+                                                </div>
+                                                <div class="col-5 col-md-6 text-right font-weight-bold ng-binding">
+                                                    ₹ 0.00
+                                                </div>
+                                            </div>
+                                            <div class="row border-bottom pt-2 pb-2 m-0">
+                                                <div class="col-7 col-md-6 font-weight-bold">
+                                                    <a href="javascript:void(0);">Taxes and Fees </a>
+                                                </div>
+                                                <div class="col-5 col-md-6 text-right font-weight-bold ng-binding ng-scope">
+                                                    ₹ 0.00
+                                                </div>
+                                            </div>
+                                            <div class="row pt-0 pb-0 m-0" style="background: #dddddd;">
+                                                <div class="col-7 col-md-6 font-weight-bold">
+                                                    <h5 class="text-primary font-weight-bold uppercase">Total Fare</h5>
+                                                </div>
+                                                <div class="col-5 col-md-6 text-right mt-3">
+                                                    <span class="h5 text-primary font-weight-bold">₹ 0.00</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-6 col-md-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <div class="row">
+                                                <div class="col-12 col-md-12">
+                                                    <span class="lbl-bold lbl-large">Have a Promocode ?</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-body pl-0 pr-0">
+                                            <div class="row m-0">
+                                                <div class="col-12">
+                                                    <div>
+                                                        <label class="sr-only" for="DealOption">PromoCode</label>
+                                                        <div class="input-group mb-2">
+                                                            <div class="w-75 position-relative">
+                                                                <input type="text" class="form-control border pl-1 bg-white" style="text-transform:uppercase" id="DealOption" placeholder="">
+                                                            </div>
+                                                            <div class="input-group-prepend w-25">
+                                                                <div class="input-group-text pointer ng-hide" id="btnPromoCode">Applied</div>
+                                                                <div class="input-group-text pointer">Apply</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

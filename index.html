@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en" class="js-focus-visible" data-js-focus-visible>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Airline Ticket</title>
+
+
+    <!-- CSS only -->
+    <link href="/html/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../html/css/MasterStyles.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" as="style" rel="stylesheet">
+    <link rel="stylesheet" href="../html/css/style.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- JavaScript Bundle with Popper -->
+    <script src="/html/js/bootstrap.bundle.min.js"></script>
+    <script src="../html/js/MasterScript.js"></script>
+    <!-- <script src="../html/js/FilterScript.js"></script>
+    <script src="../html/js/FlightScript.js"></script> -->
+    <script src="../html/js/custom.js"></script>
+
+</head>
+
+<body>
+    <div class="modal fade animated fadeInDown" id="mdlLogin" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body position-relative full-height" style="height:auto;">
+                    <button type="button" class="close position-relative" data-dismiss="modal"><i class="material-icons">close</i></button>
+                    <div id="login_otp" class="loginotp" style="width:100%; display: none;">
+                        <form name="frmLoginOTPForm" class="p-5">
+                            <h3 class="text-center font-weight-bold"><img src="../html/image/site_icon.png" class="lazyload">
+                                <span class="text-uppercase align-middle">Login With OTP</span>
+                            </h3>
+                            <div class="col-md-12 input-field p-0 mt-4">
+                                <input name="txtMobileNumber" type="tel" maxlength="10" class="font-weight-700 lbl-large clsEnter" id="txtMobileNumber" tabindex="1" oncopy="return false" oncut="return false" onpaste="return false" ondrag="return false" ondrop="return false" inputtype="mobile"
+                                    autocomplete="off">
+                                <label for="txtMobileNumber" class="active">MobileNumber </label>
+                                <i class="material-icons right text-muted lbl-large showPassword">vpn_key</i>
+                            </div>
+                            <div class="col-md-12 p-0 mt-4">
+                                <button type="submit" class="btn btn-lg btn-primary w-100 text-center font-weight-bold lbl-large" tabindex="3" id="btnOTP">
+                                    Proceed
+                                </button>
+                                <br>
+                                <div class="col-md-12 p-0 mt-2 text-center">
+                                    <a href="javascript:void(0);" class="float-left">Login with password</a>
+                                    <a href="" class="float-right">Resend OTP</a>
+                                    <br><br>
+                                    <div class="">00 : Miniutes left to enable Re-send OTP</div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div id="login_form" class="login" style="width:100%;">
+                        <form name="frmLoginForm" class="p-5">
+                            <h3 class="text-center font-weight-bold">
+                                <img data-src="../html/image/site_icon.png" class="lazyload">
+                                <span class="text-uppercase align-middle">Customer Login</span>
+                            </h3>
+                            <div class="col-md-12 input-field p-0 mt-5">
+                                <input name="txtMobileNumber" id="txtMobileNumber1" type="tel" maxlength="10" class="font-weight-700 lbl-large clsEnter" tabindex="1" oncopy="return false" oncut="return false" onpaste="return false" ondrag="return false" ondrop="return false" inputtype="mobile"
+                                    autocomplete="off">
+                                <label for="txtMobileNumber1">Mobile Number</label>
+                                <i class="material-icons right text-muted lbl-large showPassword">account_circle</i>
+                            </div>
+                            <div class="col-md-12 input-field p-0 mt-4">
+                                <input name="txtPassword" type="password" class="font-weight-700 lbl-large clsEnter" inputtype="numcharspecial" minlen="8" oncopy="return false" oncut="return false" onpaste="return false" ondrag="return false" ondrop="return false" id="txtPassword1"
+                                    tabindex="1" autocomplete="off">
+                                <label for="txtPassword1">Password </label>
+                                <i class="material-icons right text-muted lbl-large showPassword ">vpn_key</i>
+                                <br>
+                            </div>
+                            <div class="col-md-12 input-field p-0 mt-2">
+                                <!-- ngIf: Login.Error!=null -->
+
+                            </div>
+                            <div class="col-md-12 p-0 mt-2">
+                                <a class="right" onclick="showHideForm('recover-password','login_form')">Forgot your password?</a>
+                            </div>
+                            <div class="col-md-12 p-0 mt-5">
+                                <button class="btn btn-lg btn-primary w-100 text-center font-weight-bold lbl-large" tabindex="3" id="btnLogin">
+                                    Sign In
+                                </button>
+                            </div>
+                            <div class="col-md-12 text-center mt-3">
+                                <span class="lbl-large lbl-bold">OR</span>
+                            </div>
+                            <div class="col-md-12 p-0 mt-4">
+                                <button class="btn btn-lg btn-outline-primary w-100 text-center font-weight-bold lbl-large" tabindex="4" id="btnLogin1" onclick="showHideForm('login_otp','login_form')">
+                                    Request OTP
+                                </button>
+                            </div>
+                            <div class="col-md-12 p-0 mt-5 text-center">
+                                <span class="pr-3 text-muted">Not a Member?</span>
+                                <a id="dvRequestPassword" ng-click="ShowSignUp();" class="btn btn-md bg-light text-dark font-weight-bold " tabindex="4">
+                                    Sign Up
+                                </a>
+                            </div>
+                        </form>
+
+                    </div>
+                    <div id="recover-password" class="forgetpwd" style="width:100%; display: none;">
+                        <form name="frmForgotForm" class="p-5">
+                            <h3 class="text-center font-weight-bold">
+                                <img src="../html/image/site_icon.png" class="lazyload">
+                                <span class="text-uppercase align-middle">Forgot Password</span>
+                            </h3>
+                            <div class="col-md-12 input-field p-0 mt-5">
+                                <input name="txtMobileNumber" type="tel" maxlength="10" class="font-weight-700 lbl-large clsEnter" id="txtMobileNumber" tabindex="1" oncopy="return false" oncut="return false" onpaste="return false" ondrag="return false" ondrop="return false" inputtype="mobile"
+                                    autocomplete="off">
+                                <label for="txtMobileNumber"></label>
+                                <i class="material-icons right text-muted lbl-large showPassword">account_circle</i>
+                            </div>
+
+                            <div class="col-md-12 input-field p-0 mt-2">
+                            </div>
+                            <div class="col-md-12 p-0 mt-4">
+                                <button type="submit" class="btn btn-lg btn-primary w-100 text-center font-weight-bold lbl-large" tabindex="3" id="btnForgotPassword">
+                                    Submit
+                                </button>
+                                <div class="col-md-12 p-0 mt-2 text-center">
+                                    <a onclick="showHideForm('recover-password','login_form')">I remember my password</a>
+                                </div>
+                            </div>
+                            <div class="col-md-12 p-0 mt-4">
+                                <span class=""></span>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="loader text-center" style="top:50%;left:50%; display: none;">
+                        <img src="../html/image/site_icon.png" class="lazyload">
+                        <span class="h3 text-center text-uppercase font-weight-bold align-middle">
+                            Please Wait
+                        </span>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <img src="../html/image/loader.gif" class="lazyload">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 text-muted ng-binding">
+                                We are authenticate your account
+                            </div>
+                        </div>
+                    </div>
+                    <div class="signup" style=" height:auto; display: none;">
+                        <form name="frmSignupForm" class="p-5">
+                            <h3 class="text-center font-weight-bold"><img src="../html/image/site_icon.png" class="lazyload">
+                                <span class="text-uppercase align-middle">Sign Up</span>
+                            </h3>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="col-md-12 input-field p-0 mt-3" style="margin-top:-10px" tabindex="1">
+                                        <select class="lbl-large clsEnter" style="border-bottom: 1px solid #9e9e9e;" id="txtName" tabindex="1" autocomplete="off"> 
+                                            <option ng-hide="" value="" class="">Select</option>
+                                            <option value="Mr" selected="selected">Mr</option>
+                                            <option value="Ms">Ms</option>
+                                            <option value="Mrs">Mrs</option>
+                                        </select>
+                                        <label for="txtMobileNumber" style="margin-top:-25px" class="ng-binding">
+                                            *
+                                            <fv label=""></fv>
+                                        </label>
+                                    </div>
+                                    FV
+                                    <div class="col-md-12 input-field p-0 mt-3">
+                                        <input type="text" class="font-weight-700 lbl-large clsEnter" style="text-transform:uppercase;width:95%" id="txtName" tabindex="2" inputtype="char" oncopy="return false" oncut="return false" onpaste="return false" ondrag="return false" ondrop="return false"
+                                            autocomplete="off">
+                                        <label for="txtMobileNumber" class="ng-binding">*</label>
+                                        <i class="material-icons right text-muted lbl-large showPassword">account_circle</i>
+                                    </div>
+                                    <div class="col-md-12 input-field p-0 mt-3">
+                                        <input type="text" class="font-weight-700 lbl-large clsEnter" style="text-transform:uppercase;width:95%" id="txtName" tabindex="3" inputtype="char" oncopy="return false" oncut="return false" onpaste="return false" ondrag="return false" ondrop="return false"
+                                            autocomplete="off">
+                                        <label for="txtMobileNumber" class="ng-binding">*</label>
+                                        <i class="material-icons right text-muted lbl-large showPassword">account_circle</i>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="col-md-12 input-field p-0">
+                                        <input type="tel" maxlength="10" class="font-weight-700 lbl-large clsEnter" style="width:95%" id="txtMobile" tabindex="4" inputtype="mobile" oncopy="return false" oncut="return false" onpaste="return false" ondrag="return false" ondrop="return false"
+                                            autocomplete="off">
+                                        <label for="txtPassword" class="ng-binding">* </label>
+                                        <i class="material-icons right text-muted lbl-large showPassword ">contacts</i>
+                                    </div>
+                                    <div class="col-md-12 input-field p-0 mt-3">
+                                        <input type="email" class="font-weight-700 lbl-large clsEnter " style="width:95%" inputtype="mail" id="txtEmail" tabindex="5" oncopy="return false" oncut="return false" onpaste="return false" ondrag="return false" ondrop="return false" autocomplete="off">
+                                        <label for="txtPassword" class="ng-binding">* </label>
+                                        <i class="material-icons right text-muted lbl-large showPassword ">email</i>
+                                    </div>
+                                    <div class="col-md-12 mb-3 mt-3 p-0">
+                                        <label class="m-0" for="AddGST">
+                                            <input type="checkbox" id="AddGST" class="filled-in">
+                                            <span class="lbl-bold lbl-medium">
+                                                Add GST Details
+                                            </span>
+                                        </label>
+                                    </div>
+                                    <div class="col-12 col-md-12 input-field p-0 mt-3">
+                                        <input type="text" class="font-weight-700 lbl-large clsEnter" style="width:95%" id="txtEmail" tabindex="6" oncopy="return false" oncut="return false" onpaste="return false" ondrag="return false" ondrop="return false">
+                                        <label for="txtPassword">Company Name</label>
+                                        <i class="material-icons right text-muted lbl-large showPassword ">account_box</i>
+                                    </div>
+                                    <div class="col-12 col-md-12 input-field p-0 mt-3">
+                                        <input type="text" class="font-weight-700 lbl-large clsEnter" style="width:95%" id="txtEmail" tabindex="6" oncopy="return false" oncut="return false" onpaste="return false" ondrag="return false" ondrop="return false">
+                                        <label for="txtPassword">GST Number</label>
+                                        <i class="material-icons right text-muted lbl-large showPassword ">account_balance</i>
+                                    </div>
+                                    <div class="col-12 col-md-12 input-field p-0 mt-3">
+                                        <input type="text" class="font-weight-700 lbl-large clsEnter" style="width:95%" id="txtEmail" tabindex="6" oncopy="return false" oncut="return false" onpaste="return false" ondrag="return false" ondrop="return false">
+                                        <label for="txtPassword">GST Address</label>
+                                        <i class="material-icons right text-muted lbl-large showPassword ">home</i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-md-6 p-0 mt-4 text-center">
+                                    <span class="pr-3 text-muted">Do you have an Account?</span><br> <a id="dvRequestPassword" href="javascript:void(0)" class="font-weight-bold " tabindex="7">Click here to Login</a>
+                                </div>
+                                <div class="col-md-6 p-0 mt-4">
+                                    <button class="btn btn-lg btn-primary w-100 text-center font-weight-bold lbl-large" tabindex="8" id="btnsignUp">
+                                        Sign Up
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="ConfirmationModal" class="modal modal-alert" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false" aria-modal="true">
+        <div class="modal-dialog alert-dialog">
+            <div class="modal-content alert-modal">
+                <div class="modal-header">
+                    <i class="material-icons align-middle">notifications_active</i>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12"><span class="lbl-medium text-primary" id="ConfirmationMsg">Use this option if you are, a serving/retired personnel of the Indian Armed Forces or Indian Paramilitary Forces. You may also select this option if you are valid Dependent (Spouse/Child/Parent) of a serving/retired Indian Armed Forces and Indian Paramilitary Forces Personnel.<b> Please note valid military ID will be required for all passengers at Airline's check-in counter for tickets booked using this option.</b></span></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-warning" id="btnConfirmOKAction">OK</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCEL</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <header class="header bg-white sticky-top">
+        <div class="container">
+            <div class="row m-0 d-flex justify-content-between">
+                <div class="col-6 col-sm-5 col-md-auto align-self-center p-0">
+                    <h1><a href="home.html">Airline Ticket</a></h1>
+                </div>
+                <div class="col-6 col-sm-7 col-md-auto ml-0 valign-wrapper-sm p-0">
+                    <div class="d-flex align-items-center">
+                        <div class="ml-auto  loginmenu">
+                            <div class="d-sm-inline-block ml-sm-auto">
+                                <ul class="list-inline mb-0 valign-wrapper">
+                                    <li class="list-inline-item mr-0 hide-on-med-and-down">
+                                        <div class="d-inline float-left contact_text">
+                                            <p class="mb-0 mt-0 text-gray text-right">Book Online or Call Us 24/7</p>
+                                        </div>
+                                    </li>
+                                    <li class="list-inline-item mr-0 hide-on-med-and-down">
+                                        <button class="btn btn-light login-text border-0 shadow-none pl-2 pr-2" type="button" data-toggle="modal" data-target="#mdlLogin">
+                                            <i class="material-icons text-gray">
+                                                <img data-src="../html/image/gst.png"  class=" ls-is-cached lazyloaded" src="../html/image/gst.png">
+                                            </i>
+                                            <br>
+                                            Add GST
+                                        </button>
+                                    </li>
+                                    <li class="list-inline-item mr-0 hide-on-med-and-down">
+                                        <button class="btn btn-light login-text border-0 shadow-none pl-2 pr-2" type="button">
+                                            <i class="material-icons text-gray">
+                                                <img data-src="../html/image/icon_mytrip.png" class=" ls-is-cached lazyloaded" src="../html/image/icon_mytrip.png">
+                                            </i>
+                                            <br>
+                                            My Trip
+                                        </button>
+                                    </li>
+                                    <li class="list-inline-item mr-0 hide-on-med-and-down">
+                                        <div class="dropdown dropleft">
+                                            <button ng-click="LoadPage('Contact')" class="btn dropdown-toggle btn-light login-text border-0 shadow-none pl-2 pr-2" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <i class="material-icons text-gray">
+                                                    <img data-src="../html/image/icon_contact.png" class=" ls-is-cached lazyloaded" src="../html/image/icon_contact.png">
+                                                </i>
+                                                <br>
+                                                Support
+                                            </button>
+
+                                        </div>
+                                    </li>
+                                    <li class="list-inline-item mr-0 ng-scope">
+                                        <div class="dropdown dropdown">
+                                            <button class="btn dropdown-toggle btn-light login-text border-0 shadow-none pl-2 pr-2" type="button" id="dropdownMenusignup" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="#666666" viewBox="0 0 24 24">
+                                                    <path d="M9.602 3.7c-1.154 1.937-.635 5.227 1.424 9.025.93 1.712.697 3.02.338 3.815-.982 2.178-3.675 2.799-6.525 3.456-1.964.454-1.839.87-1.839 4.004h-1.995l-.005-1.241c0-2.52.199-3.975 3.178-4.663 3.365-.777 6.688-1.473 5.09-4.418-4.733-8.729-1.35-13.678 3.732-13.678 3.321 0 5.97 2.117 5.97 6.167 0 3.555-1.949 6.833-2.383 7.833h-2.115c.392-1.536 2.499-4.366 2.499-7.842 0-5.153-5.867-4.985-7.369-2.458zm13.398 15.3h-3v-3h-2v3h-3v2h3v3h2v-3h3v-2z">
+                                                    </path>
+                                                </svg>
+                                                <br>
+                                                <span class="ng-scope">Sign Up </span>
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 24 24">
+                                                    <path d="M0 7.33l2.829-2.83 9.175 9.339 9.167-9.339 2.829 2.83-11.996 12.17z">
+                                                    </path>
+                                                </svg>
+                                                
+                                            </button>
+                                            <div class="dropdown-menu pointer indexhome" aria-labelledby="dropdownMenusignup">
+                                                <a class="dropdown-item pointer" href="javascript:void(0);">Customer Signup</a>
+                                                <a class="dropdown-item pointer" href="javascript:void(0);">Corporate Signup</a>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="list-inline-item mr-0 ng-scope">
+                                        <div class="dropdown dropdown">
+                                            <button class="btn dropdown-toggle btn-light login-text border-0 shadow-none pl-2 pr-2" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <i class="material-icons text-gray">
+                                                    <img data-src="../html/image/icon_user.png" class=" ls-is-cached lazyloaded" src="../html/image/icon_user.png">
+                                                </i>
+                                                <br>
+                                                <span class="ng-scope">Sign In </span>
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 24 24">
+                                                    <path d="M0 7.33l2.829-2.83 9.175 9.339 9.167-9.339 2.829 2.83-11.996 12.17z"></path>
+                                                </svg>
+                                            </button>
+                                            <div class="dropdown-menu pointer indexhome" aria-labelledby="dropdownMenuButton">
+                                                <a class="dropdown-item pointer" href="javascript:void(0);">Customer Login</a>
+                                                <a class="dropdown-item pointer" href="javascript:void(0);">Corporate Login</a>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <section class="bg-primary">
+        <div class="container">
+            <div class="row m-0 indexhome">
+                <nav class="main-menu static-top navbar navbar-expand-lg fixed-top mb-0 p-0" style="box-shadow:none;z-index:1019; background-color:transparent">
+                    <button class="navbar-toggler bg-primary btn-floating ml-auto hide" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                        <i class="material-icons">menu</i>
+                    </button>
+                    <div class="collapse navbar-collapse valign-wrapper align-self-start hide-on-small-and-down" id="navbarCollapse">
+                        <div id="navigation" class="navbar-nav w-100 menu-response indexhome">
+                            <!-- <ul class="navbar-nav mr-auto" id="mainmenu">
+
+                                <li class="nav-item animated fadeInDown" data-animation="fadeInDown" data-animation-delay="0.1s" style="animation-delay: 0.1s; opacity: 1;">
+                                    <a class="nav-link lbl-medium text-uppercase pl-4 pr-4 bus" roboto_font="" href="BusSearch">Bus</a>
+                                </li>
+                                <li class="nav-item animated fadeInDown" data-animation="fadeInDown" data-animation-delay="0.1s" style="animation-delay: 0.1s; opacity: 1;">
+                                    <a class="nav-link lbl-medium text-uppercase pl-4 pr-4 holiday roboto_font" href="Package">Holidays</a>
+                                </li>
+                                <li class="nav-item animated fadeInDown" data-animation="fadeInDown" data-animation-delay="0.1s" style="animation-delay: 0.1s; opacity: 1;">
+                                    <a class="nav-link lbl-medium text-uppercase pl-4 pr-4 disabled roboto_font" href="#">Recharge</a>
+                                </li>
+                                <li class="nav-item animated fadeInDown" data-animation="fadeInDown" data-animation-delay="0.1s" style="animation-delay: 0.1s; opacity: 1;">
+                                    <a class="nav-link lbl-medium text-uppercase pl-4 pr-4 disabled roboto_font" href="#">VISA Process</a>
+                                </li>
+                                <li class="nav-item animated fadeInDown" data-animation="fadeInDown" data-animation-delay="0.1s" style="animation-delay: 0.1s; opacity: 1;">
+                                    <a class="nav-link lbl-medium text-uppercase pl-4 pr-4 insurance roboto_font" href="InsuranceSearch">Insurance</a>
+                                </li>
+                            </ul> -->
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </section>
+    <div class="divider bg-primary-dark"></div>
+    <div id="main">
+        <main class="main">
+            <div class="package_list_section">
+                <div class="row no-gutters">
+                    <div class="col-12 col-md-12">
+                        <div class="row m-0 bg-theme">
+                            <div class="container">
+                                <div class="col-12 col-md-12">
+                                    <h5 class="text-white text-center mb-md-5 mb-sm-2 text-uppercase hide-on-med-and-down">
+                                        BOOK DOMESTIC AND INTERNATIONAL FLIGHTS
+                                    </h5>
+                                    <div class="row mb-3">
+                                        <div class="col-12 col-md-12 p-sm-0 text-center">
+                                            <label class="mr-2 mb-0" for="ONE_WAY">
+                                                <input type="radio" value="ONE_WAY" id="ONE_WAY" class="with-gap" name="RB_BookingType" checked="checked">
+                                                <span class="font-weight-600 lbl-medium text-white text-uppercase">OneWay</span>
+                                            </label>
+                                            <label class="mr-2 mb-0" for="ROUNDTRIP">
+                                                <input type="radio" value="ROUNDTRIP" id="ROUNDTRIP" class="with-gap" name="RB_BookingType">
+                                                <span class="font-weight-600 lbl-medium text-white text-uppercase">Round Trip</span>
+                                            </label>
+                                            <label class="mr-2 mb-0 hide-on-med-and-down" for="cbRoundTrip_Fare">
+                                                <input type="checkbox" id="cbRoundTrip_Fare" class="filled-in">
+                                                <span class="font-weight-600 lbl-medium text-white text-uppercase">Round Trip Discount</span>
+                                            </label>
+                                            <label class="mr-2 mb-0 hide-on-med-and-down" for="cbDirectFlight">
+                                                <input type="checkbox" id="cbDirectFlight" class="filled-in">
+                                                <span class="font-weight-600 lbl-medium text-white text-uppercase">Direct Flight</span>
+                                            </label>
+                                            <label class="mr-2 mb-0 hide-on-med-and-down" for="cbDefence">
+                                                <input type="checkbox" id="cbDefence" class="filled-in" data-toggle="modal" data-target="#ConfirmationModal">
+                                                <span class="font-weight-600 lbl-medium text-white text-uppercase">Defence</span>
+                                                <img class="new_icon" src="../html/image/new_icon.png" alt="" style="position: relative;height: 20px;top: -25px;left: -75px !important;">
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 col-md-12">
+                                            <form action="" autocomplete="off">
+                                                <div class="row flight-search-bg">
+                                                    <div class="col-12 col-lg-6">
+                                                        <div class="row d-flex justify-content-between position-relative">
+                                                            <div class="col-12 col-md-6 col-sm border-right pt-1 pb-1 border-sm-bottom airfly">
+                                                                <div class="input-field bg-white pointer is-dirty">
+                                                                    <div angucomplete-alt="" class="" id="anguScroll" placeholder="Select Origin City" pause="400" selected-object="From" pop-city="true" description-field="Airport" search-fields="Name" local-data="Origin" title-field="Name" remote-url="FlightSearch/GetCity?CityName="
+                                                                        remote-url-data-field="Data" remote-url-response-formatter="CityResponseFormatter" tabindex="1" showmessage="false">
+                                                                        <div class="angucomplete-holder">
+                                                                            <input id="anguScroll_value" class="open_sans_fonts infostate" type="text" focus="false" placeholder="Select Origin City" autocorrect="off" autocomplete="off" onfocus="this.value=''">
+                                                                            <div id="anguScroll_dropdown" class="angucomplete-dropdown ng-hide">
+                                                                                <div class="angucomplete-searching ng-binding ng-hide">Searching...</div>
+                                                                                <div class="angucomplete-searching text-muted ng-hide"> POPULAR CITIES</div>
+                                                                                <div class="angucomplete-searching ng-binding">No results found</div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-12 col-md-6 pl-md-0 col-sm border-right pt-1 pb-1 border-sm-bottom pl-lg-3 airfly">
+                                                                <div class="input-field  bg-white pointer is-dirty" title="">
+                                                                    <div angucomplete-alt="" class="" id="anguScroll" placeholder="Select Destination City" pause="400" selected-object="To" pop-city="true" description-field="Airport" search-fields="Name" local-data="Destination" title-field="Name" remote-url="FlightSearch/GetCity?CityName="
+                                                                        remote-url-data-field="Data" remote-url-response-formatter="CityResponseFormatter" tabindex="2" showmessage="false">
+                                                                        <div class="angucomplete-holder">
+                                                                            <input id="anguScroll_value" class="open_sans_fonts infostate" type="text" focus="false" placeholder="Select Destination City" autocorrect="off" autocomplete="off" onfocus="this.value=''">
+                                                                            <div id="anguScroll_dropdown" class="cube ng-hide"></div>
+                                                                            <div id="anguScroll_dropdown" class="angucomplete-dropdown ng-hide">
+                                                                                <div class="angucomplete-searching ng-binding ng-hide">Searching...</div>
+                                                                                <div class="angucomplete-searching text-muted ng-hide"> POPULAR CITIES</div>
+                                                                                <div class="angucomplete-searching ng-binding">No results found</div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <span ng-show="DestinationID" class="floating-label lbl-medium text-muted hide ng-hide">Type City here</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="d-none d-sm-block pointer position-absolute double_arrow_icon">
+                                                                <a class="pointer d-flex align-items-center circle-26 bg-white border">
+                                                                    <span class="text-center hidden-xs pointer">
+                                                                        <img class="rotate" src="./image/double-arrow.png">
+                                                                    </span>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12 col-lg-3 border-right pt-1 pb-1 pr-md-0 border-sm-bottom pointer calender-trigger">
+                                                        <div class="row">
+                                                            <div class="col-12 col-md col-lg-6 pt-2 pb-2">
+                                                                <label class="datepicker search-date open_sans_fonts mb-0 pointer" type="text" readonly=""> THU,07 OCT </label>
+                                                            </div>
+                                                            <!-- <div class="col-12 col-md col-lg-6 pt-2 pb-2">
+                                                                <button class="row mt-0 border-0"></button>
+                                                                <label class="datepicker search-date open_sans_fonts mb-0 pointer" type="text" readonly=""></label>
+                                                            </div> -->
+                                                            <div compile="ShowDateOnDetails" class="calender-box">
+                                                                <div class="ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all modalDatePicker bar" scroll="" id="style-1">
+                                                                    <div class="dtePic-body text-center">
+                                                                        <span class="left" id="ankPrev"> 
+                                                                        <i class="material-icons text-muted circle border-round pointer">arrow_back</i> 
+                                                                        </span>
+                                                                        <span class="text-center departure_date" id="modalDateHeader"> Select Departure Date</span>
+                                                                        <span class="right"> 
+                                                                            <i class="material-icons text-muted circle border-round pointer">arrow_forward</i>
+                                                                        </span>
+                                                                    </div>
+                                                                    <div class="dtePic-body dtefare_calendar">
+                                                                        <div id="divFareCalendar0" class="faretext faretext_left">
+                                                                            <table cellpadding="3" cellspacing="3">
+                                                                                <tbody>
+                                                                                    <tr>
+                                                                                        <td>
+                                                                                            <span id="spnMonth" class="spMed spn_low_cell">September - 2021</span>
+                                                                                        </td>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                            <div>
+                                                                                <table cellpadding="0" class="tblCalendar" cellspacing="3">
+                                                                                    <tbody>
+                                                                                        <tr>
+                                                                                            <th>Mon</th>
+                                                                                            <th>Tue</th>
+                                                                                            <th>Wed</th>
+                                                                                            <th>Thu</th>
+                                                                                            <th>Fri</th>
+                                                                                            <th>Sat</th>
+                                                                                            <th>Sun</th>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td></td>
+                                                                                            <td></td>
+                                                                                            <td class="dis_Cells"><span class="spn_low_cell">1</span></td>
+                                                                                            <td class="dis_Cells"><span class="spn_low_cell">2</span></td>
+                                                                                            <td class="dis_Cells"><span class="spn_low_cell">3</span></td>
+                                                                                            <td class="dis_Cells"><span class="spn_low_cell">4</span></td>
+                                                                                            <td class="dis_Cells"><span class="spn_low_cell">5</span></td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td class="dis_Cells"><span class="spn_low_cell">6</span></td>
+                                                                                            <td class="dis_Cells"><span class="spn_low_cell">7</span></td>
+                                                                                            <td class="dis_Cells"><span class="spn_low_cell">8</span></td>
+                                                                                            <td class="dis_Cells"><span class="spn_low_cell">9</span></td>
+                                                                                            <td class="dis_Cells"><span class="spn_low_cell">10</span></td>
+                                                                                            <td class="dis_Cells"><span class="spn_low_cell">11</span></td>
+                                                                                            <td class="dis_Cells"><span class="spn_low_cell">12</span></td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td class="dis_Cells"><span class="spn_low_cell">13</span></td>
+                                                                                            <td class="dis_Cells"><span class="spn_low_cell">14</span></td>
+                                                                                            <td class="dis_Cells"><span class="spn_low_cell">15</span></td>
+                                                                                            <td class="dis_Cells"><span class="spn_low_cell">16</span></td>
+                                                                                            <td class="dis_Cells"><span class="spn_low_cell">17</span></td>
+                                                                                            <td class="dis_Cells"><span class="spn_low_cell">18</span></td>
+                                                                                            <td class="dis_Cells"><span class="spn_low_cell">19</span></td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td class="dis_Cells"><span class="spn_low_cell">20</span></td>
+                                                                                            <td class="dis_Cells"><span class="spn_low_cell">21</span></td>
+                                                                                            <td class="dis_Cells"><span class="spn_low_cell">22</span></td>
+                                                                                            <td class="dis_Cells"><span class="spn_low_cell">23</span></td>
+                                                                                            <td class="dis_Cells"><span class="spn_low_cell">24</span></td>
+                                                                                            <td class="dis_Cells"><span class="spn_low_cell">25</span></td>
+                                                                                            <td class="dis_Cells"><span class="spn_low_cell">26</span></td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td class="dis_Cells"><span class="spn_low_cell">27</span></td>
+                                                                                            <td class="dis_Cells"><span class="spn_low_cell">28</span></td>
+                                                                                            <td class="dis_Cells"><span class="spn_low_cell">29</span></td>
+                                                                                            <td valign="top" class="emp_Cells" ng-click="SetDate(&quot;30&quot;,&quot;0&quot;,&quot;09&quot; ,&quot;2021&quot; ,&quot;0&quot;);"><span class="spn_low_cell">30</span></td>
+                                                                                        </tr>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div id="divFareCalendar1" class="faretext faretext_right">
+                                                                            <table cellpadding="3" cellspacing="3">
+                                                                                <tbody>
+                                                                                    <tr>
+                                                                                        <td> <span id="spnMonth" class="spMed spn_low_cell">October - 2021</span> </td>
+                                                                                    </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                            <div>
+                                                                                <table cellpadding="0" class="tblCalendar" cellspacing="3">
+                                                                                    <tbody>
+                                                                                        <tr>
+                                                                                            <th>Mon</th>
+                                                                                            <th>Tue</th>
+                                                                                            <th>Wed</th>
+                                                                                            <th>Thu</th>
+                                                                                            <th>Fri</th>
+                                                                                            <th>Sat</th>
+                                                                                            <th>Sun</th>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td></td>
+                                                                                            <td></td>
+                                                                                            <td></td>
+                                                                                            <td></td>
+                                                                                            <td valign="top" class="emp_Cells"><span class="spn_low_cell">1</span></td>
+                                                                                            <td valign="top" class="emp_Cells"><span class="spn_low_cell">2</span></td>
+                                                                                            <td valign="top" class="emp_Cells"><span class="spn_low_cell">3</span></td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td valign="top" class="emp_Cells"><span class="spn_low_cell">4</span></td>
+                                                                                            <td valign="top" class="emp_Cells"><span class="spn_low_cell">5</span></td>
+                                                                                            <td valign="top" class="emp_Cells"><span class="spn_low_cell">6</span></td>
+                                                                                            <td valign="top" class="emp_Cells"><span class="spn_low_cell">7</span></td>
+                                                                                            <td valign="top" class="emp_Cells"><span class="spn_low_cell">8</span></td>
+                                                                                            <td valign="top" class="emp_Cells"><span class="spn_low_cell">9</span></td>
+                                                                                            <td valign="top" class="emp_Cells"><span class="spn_low_cell">10</span></td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td valign="top" class="emp_Cells"><span class="spn_low_cell">11</span></td>
+                                                                                            <td valign="top" class="emp_Cells"><span class="spn_low_cell">12</span></td>
+                                                                                            <td valign="top" class="emp_Cells"><span class="spn_low_cell">13</span></td>
+                                                                                            <td valign="top" class="emp_Cells"><span class="spn_low_cell">14</span></td>
+                                                                                            <td valign="top" class="emp_Cells"><span class="spn_low_cell">15</span></td>
+                                                                                            <td valign="top" class="emp_Cells"><span class="spn_low_cell">16</span></td>
+                                                                                            <td valign="top" class="emp_Cells"><span class="spn_low_cell">17</span></td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td valign="top" class="emp_Cells"><span class="spn_low_cell">18</span></td>
+                                                                                            <td valign="top" class="emp_Cells"><span class="spn_low_cell">19</span></td>
+                                                                                            <td valign="top" class="emp_Cells"><span class="spn_low_cell">20</span></td>
+                                                                                            <td valign="top" class="emp_Cells"><span class="spn_low_cell">21</span></td>
+                                                                                            <td valign="top" class="emp_Cells"><span class="spn_low_cell">22</span></td>
+                                                                                            <td valign="top" class="emp_Cells"><span class="spn_low_cell">23</span></td>
+                                                                                            <td valign="top" class="emp_Cells"><span class="spn_low_cell">24</span></td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td valign="top" class="emp_Cells"><span class="spn_low_cell">25</span></td>
+                                                                                            <td valign="top" class="emp_Cells"><span class="spn_low_cell">26</span></td>
+                                                                                            <td valign="top" class="emp_Cells"><span class="spn_low_cell">27</span></td>
+                                                                                            <td valign="top" class="emp_Cells"><span class="spn_low_cell">28</span></td>
+                                                                                            <td valign="top" class="emp_Cells"><span class="spn_low_cell">29</span></td>
+                                                                                            <td valign="top" class="emp_Cells"><span class="spn_low_cell">30</span></td>
+                                                                                            <td valign="top" class="emp_Cells"><span class="spn_low_cell">31</span></td>
+                                                                                        </tr>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12 col-lg-3">
+                                                        <div class="row text-center">
+                                                            <div class="col-12 col-md-10 is-dirty select_traveller_details">
+                                                                <p class="text-left mb-0 search-text search-traveler open_sans_fonts pointer pt-1 pb-1">1 PAX, ECONOMY</p>
+                                                                <div class="pax-drop">
+                                                                    <p class="mb-0 text-left font-weight-600">ADULTS (12yrs +)</p>
+                                                                    <div aria-label="Page navigation example">
+                                                                        <ul class="pagination">
+                                                                            <li class="page-item active"><a class="page-link" href="javascript:void(0);">0</a></li>
+                                                                            <li class="page-item active"><a class="page-link" href="javascript:void(0);">1</a></li>
+                                                                            <li class="page-item"><a class="page-link" href="javascript:void(0);">2</a></li>
+                                                                            <li class="page-item"><a class="page-link" href="javascript:void(0);">3</a></li>
+                                                                            <li class="page-item"><a class="page-link" href="javascript:void(0);">4</a></li>
+                                                                            <li class="page-item"><a class="page-link" href="javascript:void(0);">5</a></li>
+                                                                            <li class="page-item"><a class="page-link" href="javascript:void(0);">6</a></li>
+                                                                            <li class="page-item"><a class="page-link" href="javascript:void(0);">7</a></li>
+                                                                            <li class="page-item"><a class="page-link" href="javascript:void(0);">8</a></li>
+                                                                            <li class="page-item"><a class="page-link" href="javascript:void(0);">9</a></li>
+
+                                                                        </ul>
+                                                                    </div>
+                                                                    <p class="mb-0 text-left font-weight-600">CHILDREN (2yrs - 12yrs )</p>
+                                                                    <div aria-label="Page navigation example">
+                                                                        <ul class="pagination">
+                                                                            <li class="page-item active"><a class="page-link" href="javascript:void(0);">0</a></li>
+                                                                            <li class="page-item"><a class="page-link" href="javascript:void(0);">1</a></li>
+                                                                            <li class="page-item"><a class="page-link" href="javascript:void(0);">2</a></li>
+                                                                            <li class="page-item"><a class="page-link" href="javascript:void(0);">3</a></li>
+                                                                            <li class="page-item"><a class="page-link" href="javascript:void(0);">4</a></li>
+                                                                            <li class="page-item"><a class="page-link" href="javascript:void(0);">5</a></li>
+                                                                            <li class="page-item"><a class="page-link" href="javascript:void(0);">6</a></li>
+                                                                            <li class="page-item"><a class="page-link" href="javascript:void(0);">7</a></li>
+                                                                            <li class="page-item"><a class="page-link" href="javascript:void(0);">8</a></li>
+                                                                            <li class="page-item disabled"><a class="page-link" href="javascript:void(0);">9</a></li>
+                                                                        </ul>
+                                                                    </div>
+
+                                                                    <p class="mb-0 text-left font-weight-600">INFANTS (below 2yrs)</p>
+                                                                    <div aria-label="Page navigation example">
+                                                                        <ul class="pagination">
+                                                                            <li class="page-item active"><a class="page-link" href="javascript:void(0);">0</a></li>
+                                                                            <li class="page-item"><a class="page-link" href="javascript:void(0);">1</a></li>
+                                                                            <li class="page-item disabled"><a class="page-link" href="javascript:void(0);">2</a></li>
+                                                                            <li class="page-item disabled"><a class="page-link" href="javascript:void(0);">3</a></li>
+                                                                            <li class="page-item disabled"><a class="page-link" href="javascript:void(0);">4</a></li>
+                                                                            <li class="page-item disabled"><a class="page-link" href="javascript:void(0);">5</a></li>
+                                                                            <li class="page-item disabled"><a class="page-link" href="javascript:void(0);">6</a></li>
+                                                                            <li class="page-item disabled"><a class="page-link" href="javascript:void(0);">7</a></li>
+                                                                            <li class="page-item disabled"><a class="page-link" href="javascript:void(0);">8</a></li>
+                                                                            <li class="page-item disabled"><a class="page-link" href="javascript:void(0);">9</a></li>
+
+                                                                        </ul>
+                                                                    </div>
+
+                                                                    <div class="row">
+                                                                        <div class="col-12 col-md-12">
+                                                                            <a href="javascript:void(0)" type="button" id="economy" class="btn btn-small lbl-small btn-secondary pl-1 pr-1 DOCClassActive btn-info">Economy</a>
+                                                                            <a href="javascript:void(0)" type="button" id="business" class="btn btn-small lbl-small btn-secondary pl-1 pr-1 DOCClass">Business</a>
+                                                                            <a href="javascript:void(0)" type="button" id="premiumeconomy" class="btn btn-small btn-secondary lbl-small pl-1 pr-1 DOCClass">Premium</a>
+                                                                            <a href="javascript:void(0)" type="button" id="firstclass" class="btn btn-small btn-secondary lbl-small pl-1 pr-1 DOCClass">First Class</a>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row mt-2">
+                                                                        <div class="col-12 col-md-12">
+                                                                            <input type="button" value="Done" class="btn btn-block btn-primary">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                            <div class="row">
+                                                <div class="col-12 col-md-12 pt-3 pt-md-0 pt-xl-0 text-center ">
+                                                    <input type="button" value="Search" class="btn btn-primary rounded-btn shadow-none mt-3 search_btn">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="show_package_list">
+                <div class="container">
+                    <div class="tickermessage">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="card-text">
+                                    <p>Web Check-in Mandatory, Follow all guidelines before reaching Airport.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+
+</html>

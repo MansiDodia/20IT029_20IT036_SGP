@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Airline Ticket - Best Deals & Discounts on Flight Tickets</title>
+
+    <!-- CSS only -->
+    <link href="/html/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" as="style" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../html/css/MasterStyles.css">
+    <link rel="stylesheet" href="../html/css/style.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="/html/js/bootstrap.bundle.min.js"></script>
+    <script src="../html/js/MasterScript.js"></script>
+    <script src="../html/js/custom.js"></script>
+</head>
+
+<body>
+    <div class="modal fade animated fadeInDown" id="mdlLogin" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body position-relative full-height" style="height:auto;">
+                    <button type="button" class="close position-relative" data-dismiss="modal"><i class="material-icons">close</i></button>
+                    <div id="login_otp" class="loginotp" style="width:100%; display: none;">
+                        <form name="frmLoginOTPForm" class="p-5">
+                            <h3 class="text-center font-weight-bold"><img src="../html/image/site_icon.png" class="lazyload">
+                                <span class="text-uppercase align-middle">Login With OTP</span>
+                            </h3>
+                            <div class="col-md-12 input-field p-0 mt-4">
+                                <input name="txtMobileNumber" type="tel" maxlength="10" class="font-weight-700 lbl-large clsEnter" id="txtMobileNumber" tabindex="1" oncopy="return false" oncut="return false" onpaste="return false" ondrag="return false" ondrop="return false" inputtype="mobile"
+                                    autocomplete="off">
+                                <label for="txtMobileNumber" class="active">MobileNumber </label>
+                                <i class="material-icons right text-muted lbl-large showPassword">vpn_key</i>
+                            </div>
+                            <div class="col-md-12 p-0 mt-4">
+                                <button type="submit" class="btn btn-lg btn-primary w-100 text-center font-weight-bold lbl-large" tabindex="3" id="btnOTP">
+                                    Proceed
+                                </button>
+                                <br>
+                                <div class="col-md-12 p-0 mt-2 text-center">
+                                    <a href="javascript:void(0);" class="float-left">Login with password</a>
+                                    <a href="" class="float-right">Resend OTP</a>
+                                    <br><br>
+                                    <div class="">00 : Miniutes left to enable Re-send OTP</div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div id="login_form" class="login" style="width:100%;">
+                        <form name="frmLoginForm" class="p-5">
+                            <h3 class="text-center font-weight-bold">
+                                <img data-src="../html/image/site_icon.png" class="lazyload">
+                                <span class="text-uppercase align-middle">Customer Login</span>
+                            </h3>
+                            <div class="col-md-12 input-field p-0 mt-5">
+                                <input name="txtMobileNumber" id="txtMobileNumber1" type="tel" maxlength="10" class="font-weight-700 lbl-large clsEnter" tabindex="1" oncopy="return false" oncut="return false" onpaste="return false" ondrag="return false" ondrop="return false" inputtype="mobile"
+                                    autocomplete="off">
+                                <label for="txtMobileNumber1">Mobile Number</label>
+                                <i class="material-icons right text-muted lbl-large showPassword">account_circle</i>
+                            </div>
+                            <div class="col-md-12 input-field p-0 mt-4">
+                                <input name="txtPassword" type="password" class="font-weight-700 lbl-large clsEnter" inputtype="numcharspecial" minlen="8" oncopy="return false" oncut="return false" onpaste="return false" ondrag="return false" ondrop="return false" id="txtPassword1"
+                                    tabindex="1" autocomplete="off">
+                                <label for="txtPassword1">Password </label>
+                                <i class="material-icons right text-muted lbl-large showPassword ">vpn_key</i>
+                                <br>
+                            </div>
+                            <div class="col-md-12 input-field p-0 mt-2">
+                                <!-- ngIf: Login.Error!=null -->
+
+                            </div>
+                            <div class="col-md-12 p-0 mt-2">
+                                <a class="right" onclick="showHideForm('recover-password','login_form')">Forgot your password?</a>
+                            </div>
+                            <div class="col-md-12 p-0 mt-5">
+                                <button class="btn btn-lg btn-primary w-100 text-center font-weight-bold lbl-large" tabindex="3" id="btnLogin">
+                                    Sign In
+                                </button>
+                            </div>
+                            <div class="col-md-12 text-center mt-3">
+                                <span class="lbl-large lbl-bold">OR</span>
+                            </div>
+                            <div class="col-md-12 p-0 mt-4">
+                                <button class="btn btn-lg btn-outline-primary w-100 text-center font-weight-bold lbl-large" tabindex="4" id="btnLogin1" onclick="showHideForm('login_otp','login_form')">
+                                    Request OTP
+                                </button>
+                            </div>
+                            <div class="col-md-12 p-0 mt-5 text-center">
+                                <span class="pr-3 text-muted">Not a Member?</span>
+                                <a id="dvRequestPassword" ng-click="ShowSignUp();" class="btn btn-md bg-light text-dark font-weight-bold " tabindex="4">
+                                    Sign Up
+                                </a>
+                            </div>
+                        </form>
+
+                    </div>
+                    <div id="recover-password" class="forgetpwd" style="width:100%; display: none;">
+                        <form name="frmForgotForm" class="p-5">
+                            <h3 class="text-center font-weight-bold">
+                                <img src="../html/image/site_icon.png" class="lazyload">
+                                <span class="text-uppercase align-middle">Forgot Password</span>
+                            </h3>
+                            <div class="col-md-12 input-field p-0 mt-5">
+                                <input name="txtMobileNumber" type="tel" maxlength="10" class="font-weight-700 lbl-large clsEnter" id="txtMobileNumber" tabindex="1" oncopy="return false" oncut="return false" onpaste="return false" ondrag="return false" ondrop="return false" inputtype="mobile"
+                                    autocomplete="off">
+                                <label for="txtMobileNumber"></label>
+                                <i class="material-icons right text-muted lbl-large showPassword">account_circle</i>
+                            </div>
+
+                            <div class="col-md-12 input-field p-0 mt-2">
+                            </div>
+                            <div class="col-md-12 p-0 mt-4">
+                                <button type="submit" class="btn btn-lg btn-primary w-100 text-center font-weight-bold lbl-large" tabindex="3" id="btnForgotPassword">
+                                    Submit
+                                </button>
+                                <div class="col-md-12 p-0 mt-2 text-center">
+                                    <a onclick="showHideForm('recover-password','login_form')">I remember my password</a>
+                                </div>
+                            </div>
+                            <div class="col-md-12 p-0 mt-4">
+                                <span class=""></span>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="loader text-center" style="top:50%;left:50%; display: none;">
+                        <img src="../html/image/site_icon.png" class="lazyload">
+                        <span class="h3 text-center text-uppercase font-weight-bold align-middle">
+                            Please Wait
+                        </span>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <img src="../html/image/loader.gif" class="lazyload">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 text-muted ng-binding">
+                                We are authenticate your account
+                            </div>
+                        </div>
+                    </div>
+                    <div class="signup" style=" height:auto; display: none;">
+                        <form name="frmSignupForm" class="p-5">
+                            <h3 class="text-center font-weight-bold"><img src="../html/image/site_icon.png" class="lazyload">
+                                <span class="text-uppercase align-middle">Sign Up</span>
+                            </h3>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="col-md-12 input-field p-0 mt-3" style="margin-top:-10px" tabindex="1">
+                                        <select class="lbl-large clsEnter" style="border-bottom: 1px solid #9e9e9e;" id="txtName" tabindex="1" autocomplete="off"> 
+                                            <option ng-hide="" value="" class="">Select</option>
+                                            <option value="Mr" selected="selected">Mr</option>
+                                            <option value="Ms">Ms</option>
+                                            <option value="Mrs">Mrs</option>
+                                        </select>
+                                        <label for="txtMobileNumber" style="margin-top:-25px" class="ng-binding">
+                                            *
+                                            <fv label=""></fv>
+                                        </label>
+                                    </div>
+                                    FV
+                                    <div class="col-md-12 input-field p-0 mt-3">
+                                        <input type="text" class="font-weight-700 lbl-large clsEnter" style="text-transform:uppercase;width:95%" id="txtName" tabindex="2" inputtype="char" oncopy="return false" oncut="return false" onpaste="return false" ondrag="return false" ondrop="return false"
+                                            autocomplete="off">
+                                        <label for="txtMobileNumber" class="ng-binding">*</label>
+                                        <i class="material-icons right text-muted lbl-large showPassword">account_circle</i>
+                                    </div>
+                                    <div class="col-md-12 input-field p-0 mt-3">
+                                        <input type="text" class="font-weight-700 lbl-large clsEnter" style="text-transform:uppercase;width:95%" id="txtName" tabindex="3" inputtype="char" oncopy="return false" oncut="return false" onpaste="return false" ondrag="return false" ondrop="return false"
+                                            autocomplete="off">
+                                        <label for="txtMobileNumber" class="ng-binding">*</label>
+                                        <i class="material-icons right text-muted lbl-large showPassword">account_circle</i>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="col-md-12 input-field p-0">
+                                        <input type="tel" maxlength="10" class="font-weight-700 lbl-large clsEnter" style="width:95%" id="txtMobile" tabindex="4" inputtype="mobile" oncopy="return false" oncut="return false" onpaste="return false" ondrag="return false" ondrop="return false"
+                                            autocomplete="off">
+                                        <label for="txtPassword" class="ng-binding">* </label>
+                                        <i class="material-icons right text-muted lbl-large showPassword ">contacts</i>
+                                    </div>
+                                    <div class="col-md-12 input-field p-0 mt-3">
+                                        <input type="email" class="font-weight-700 lbl-large clsEnter " style="width:95%" inputtype="mail" id="txtEmail" tabindex="5" oncopy="return false" oncut="return false" onpaste="return false" ondrag="return false" ondrop="return false" autocomplete="off">
+                                        <label for="txtPassword" class="ng-binding">* </label>
+                                        <i class="material-icons right text-muted lbl-large showPassword ">email</i>
+                                    </div>
+                                    <div class="col-md-12 mb-3 mt-3 p-0">
+                                        <label class="m-0" for="AddGST">
+                                            <input type="checkbox" id="AddGST" class="filled-in">
+                                            <span class="lbl-bold lbl-medium">
+                                                Add GST Details
+                                            </span>
+                                        </label>
+                                    </div>
+                                    <div class="col-12 col-md-12 input-field p-0 mt-3">
+                                        <input type="text" class="font-weight-700 lbl-large clsEnter" style="width:95%" id="txtEmail" tabindex="6" oncopy="return false" oncut="return false" onpaste="return false" ondrag="return false" ondrop="return false">
+                                        <label for="txtPassword">Company Name</label>
+                                        <i class="material-icons right text-muted lbl-large showPassword ">account_box</i>
+                                    </div>
+                                    <div class="col-12 col-md-12 input-field p-0 mt-3">
+                                        <input type="text" class="font-weight-700 lbl-large clsEnter" style="width:95%" id="txtEmail" tabindex="6" oncopy="return false" oncut="return false" onpaste="return false" ondrag="return false" ondrop="return false">
+                                        <label for="txtPassword">GST Number</label>
+                                        <i class="material-icons right text-muted lbl-large showPassword ">account_balance</i>
+                                    </div>
+                                    <div class="col-12 col-md-12 input-field p-0 mt-3">
+                                        <input type="text" class="font-weight-700 lbl-large clsEnter" style="width:95%" id="txtEmail" tabindex="6" oncopy="return false" oncut="return false" onpaste="return false" ondrag="return false" ondrop="return false">
+                                        <label for="txtPassword">GST Address</label>
+                                        <i class="material-icons right text-muted lbl-large showPassword ">home</i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-md-6 p-0 mt-4 text-center">
+                                    <span class="pr-3 text-muted">Do you have an Account?</span><br> <a id="dvRequestPassword" href="javascript:void(0)" class="font-weight-bold " tabindex="7">Click here to Login</a>
+                                </div>
+                                <div class="col-md-6 p-0 mt-4">
+                                    <button class="btn btn-lg btn-primary w-100 text-center font-weight-bold lbl-large" tabindex="8" id="btnsignUp">
+                                        Sign Up
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="ConfirmationModal" class="modal modal-alert" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false" aria-modal="true">
+        <div class="modal-dialog alert-dialog">
+            <div class="modal-content alert-modal">
+                <div class="modal-header">
+                    <i class="material-icons align-middle">notifications_active</i>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12"><span class="lbl-medium text-primary" id="ConfirmationMsg">Use this option if you are, a serving/retired personnel of the Indian Armed Forces or Indian Paramilitary Forces. You may also select this option if you are valid Dependent (Spouse/Child/Parent) of a serving/retired Indian Armed Forces and Indian Paramilitary Forces Personnel.<b> Please note valid military ID will be required for all passengers at Airline's check-in counter for tickets booked using this option.</b></span></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-warning" id="btnConfirmOKAction">OK</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCEL</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <header class="header">
+        <div class="container">
+            <div class="header_wrapper">
+                <div class="logo_wrapper">
+                    <h1><a href="home.html">Airline Ticket</a></h1>
+                </div>
+                <div class="main_nav">
+                    <div class="nav">
+                        <ul class="nav_wrapper">
+                            <li class="contact_detail mb_hide">
+                                <div class="contact_text">
+                                    <p>Book Online or Call Us 24/7</p>
+                                </div>
+                                <div class="contact_icon">
+                                    <a><img src="./image/icon_call.png"></a>
+                                </div>
+                            </li>
+                            <li class="nav_item login_detail mb_hide">
+                                <button class="add_gst" data-toggle="modal" data-target="#mdlLogin">
+                                    <img class="gst_icon" src="./image/gst.png" alt="">
+                                    <span>Add GST</span>
+                                </button>
+                            </li>
+                            <li class="nav_item login_detail mb_hide">
+                                <button class="my_trip" data-toggle="modal" data-target="#mdlLogin">
+                                    <img class="mytrip_icon" src="./image/icon_mytrip.png" alt="">
+                                    <span>My Trip</span>
+                                </button>
+                            </li>
+                            <li class="nav_item login_detail mb_hide">
+                                <button class="my_trip">
+                                    <img class="contact_icon" src="./image/icon_contact.png" alt="">
+                                    <span>Support</span>
+                                </button>
+                            </li>
+                            <li class="nav_item has_dropdown">
+                                <button class="my_trip">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="#666666" viewBox="0 0 24 24"><path d="M9.602 3.7c-1.154 1.937-.635 5.227 1.424 9.025.93 1.712.697 3.02.338 3.815-.982 2.178-3.675 2.799-6.525 3.456-1.964.454-1.839.87-1.839 4.004h-1.995l-.005-1.241c0-2.52.199-3.975 3.178-4.663 3.365-.777 6.688-1.473 5.09-4.418-4.733-8.729-1.35-13.678 3.732-13.678 3.321 0 5.97 2.117 5.97 6.167 0 3.555-1.949 6.833-2.383 7.833h-2.115c.392-1.536 2.499-4.366 2.499-7.842 0-5.153-5.867-4.985-7.369-2.458zm13.398 15.3h-3v-3h-2v3h-3v2h3v3h2v-3h3v-2z"></path></svg>
+                                    <span>Sign Up <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 24 24"><path d="M0 7.33l2.829-2.83 9.175 9.339 9.167-9.339 2.829 2.83-11.996 12.17z"></path></svg></span>
+                                </button>
+                                <div class="dropdown_menu">
+                                    <a class="dropdown_item" href="javascript:void(0);" data-toggle="modal" data-target="#mdlLogin">Customer Signup</a>
+                                    <a class="dropdown_item" href="javascript:void(0);" data-toggle="modal" data-target="#mdlLogin">Corporate Signup</a>
+                                </div>
+                            </li>
+                            <li class="nav_item has_dropdown">
+                                <button class="my_trip">
+                                    <img class="user_icon" src="./image/icon_user.png" alt="">
+                                    <span>Sign In <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 24 24"><path d="M0 7.33l2.829-2.83 9.175 9.339 9.167-9.339 2.829 2.83-11.996 12.17z"></path></svg></span>
+                                </button>
+                                <div class="dropdown_menu">
+                                    <a class="dropdown_item" href="javascript:void(0);">Customer Signup</a>
+                                    <a class="dropdown_item" href="javascript:void(0);">Corporate Signup</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="bg_line"></div>
+    </header>
+    <div class="search_box_section">
+        <div class="container">
+            <div class="section_wrapper">
+                <div class="flight_way_wrapper">
+                    <div class="flight_way">
+                        <label class="flight_way_select" for="M_ONE_WAY">
+                            <input type="radio" value="ONE_WAY" id="M_ONE_WAY"  name="M_RB_BookingType" class="with-gap">
+                            <span class="flight_way_title"><span>OneWay</span></span>
+                        </label>
+                        <label class="flight_way_select" for="M_ROUNDTRIP">
+                            <input type="radio" value="ROUNDTRIP" id="M_ROUNDTRIP"  name="M_RB_BookingType" class="with-gap">
+                            <span class="flight_way_title"><span>Round Trip</span></span>
+                        </label>
+                        <label class="flight_way_select" for="cbDirectFlight">
+                            <input type="checkbox" id="cbDirectFlight" class="filled-in">
+                            <span class="flight_way_title">
+                                <span>
+                                    Direct Flight
+                                </sapn>
+                            </span>
+                        </label>
+                        <label class="flight_way_select" for="cbDefence">
+                            <input type="checkbox" id="cbDefence" class="filled-in" data-toggle="modal" data-target="#ConfirmationModal">
+                            <span class="flight_way_title">
+                                <span>
+                                    Defence
+                                </sapn>
+                            </span>
+                        </label>
+                    </div>
+                </div>
+                <div class="flights_search_wrapper">
+                    <div class="select_city">
+                        <div class="field_detail">
+                            <div class="origin_city">
+                                <input type="text" name="" id="" placeholder="Select Origin City">
+                            </div>
+                        </div>
+                        <div class="field_detail">
+                            <div class="destination_city">
+                                <input type="text" name="" id="" placeholder="Select Destination City">
+                            </div>
+                        </div>
+                        <div class="double_arrow_icon">
+                            <img src="./image/double-arrow.png" alt="">
+                        </div>
+                    </div>
+                    <div class="select_more">
+                        <div class="field_detail">
+                            <div class="select_date">
+                                <div class="date">
+                                    <p class="calender-trigger"> THU,07 OCT </p>
+                                </div>
+                                <div compile="ShowDateOnDetails" class="calender-box">
+                                    <div class="ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all modalDatePicker bar" scroll="" id="style-1">
+                                        <div class="dtePic-body text-center">
+                                            <span class="left" id="ankPrev"> 
+                                            <i class="material-icons text-muted circle border-round pointer">arrow_back</i> 
+                                            </span>
+                                            <span class="text-center departure_date" id="modalDateHeader"> Select Departure Date</span>
+                                            <span class="right"> 
+                                                <i class="material-icons text-muted circle border-round pointer">arrow_forward</i>
+                                            </span>
+                                        </div>
+                                        <div class="dtePic-body dtefare_calendar">
+                                            <div id="divFareCalendar0" class="faretext faretext_left">
+                                                <table cellpadding="3" cellspacing="3">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>
+                                                                <span id="spnMonth" class="spMed spn_low_cell">September - 2021</span>
+                                                            </td>
+
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                <div>
+                                                    <table cellpadding="0" class="tblCalendar" cellspacing="3">
+                                                        <tbody>
+                                                            <tr>
+                                                                <th>Mon</th>
+                                                                <th>Tue</th>
+                                                                <th>Wed</th>
+                                                                <th>Thu</th>
+                                                                <th>Fri</th>
+                                                                <th>Sat</th>
+                                                                <th>Sun</th>
+                                                            </tr>
+                                                            <tr>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td class="dis_Cells"><span class="spn_low_cell">1</span></td>
+                                                                <td class="dis_Cells"><span class="spn_low_cell">2</span></td>
+                                                                <td class="dis_Cells"><span class="spn_low_cell">3</span></td>
+                                                                <td class="dis_Cells"><span class="spn_low_cell">4</span></td>
+                                                                <td class="dis_Cells"><span class="spn_low_cell">5</span></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="dis_Cells"><span class="spn_low_cell">6</span></td>
+                                                                <td class="dis_Cells"><span class="spn_low_cell">7</span></td>
+                                                                <td class="dis_Cells"><span class="spn_low_cell">8</span></td>
+                                                                <td class="dis_Cells"><span class="spn_low_cell">9</span></td>
+                                                                <td class="dis_Cells"><span class="spn_low_cell">10</span></td>
+                                                                <td class="dis_Cells"><span class="spn_low_cell">11</span></td>
+                                                                <td class="dis_Cells"><span class="spn_low_cell">12</span></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="dis_Cells"><span class="spn_low_cell">13</span></td>
+                                                                <td class="dis_Cells"><span class="spn_low_cell">14</span></td>
+                                                                <td class="dis_Cells"><span class="spn_low_cell">15</span></td>
+                                                                <td class="dis_Cells"><span class="spn_low_cell">16</span></td>
+                                                                <td class="dis_Cells"><span class="spn_low_cell">17</span></td>
+                                                                <td class="dis_Cells"><span class="spn_low_cell">18</span></td>
+                                                                <td class="dis_Cells"><span class="spn_low_cell">19</span></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="dis_Cells"><span class="spn_low_cell">20</span></td>
+                                                                <td class="dis_Cells"><span class="spn_low_cell">21</span></td>
+                                                                <td class="dis_Cells"><span class="spn_low_cell">22</span></td>
+                                                                <td class="dis_Cells"><span class="spn_low_cell">23</span></td>
+                                                                <td class="dis_Cells"><span class="spn_low_cell">24</span></td>
+                                                                <td class="dis_Cells"><span class="spn_low_cell">25</span></td>
+                                                                <td class="dis_Cells"><span class="spn_low_cell">26</span></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="dis_Cells"><span class="spn_low_cell">27</span></td>
+                                                                <td class="dis_Cells"><span class="spn_low_cell">28</span></td>
+                                                                <td class="dis_Cells"><span class="spn_low_cell">29</span></td>
+                                                                <td valign="top" class="emp_Cells" ng-click="SetDate(&quot;30&quot;,&quot;0&quot;,&quot;09&quot; ,&quot;2021&quot; ,&quot;0&quot;);"><span class="spn_low_cell">30</span></td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            <div id="divFareCalendar1" class="faretext faretext_right">
+                                                <table cellpadding="3" cellspacing="3">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td> <span id="spnMonth" class="spMed spn_low_cell">October - 2021</span> </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                <div>
+                                                    <table cellpadding="0" class="tblCalendar" cellspacing="3">
+                                                        <tbody>
+                                                            <tr>
+                                                                <th>Mon</th>
+                                                                <th>Tue</th>
+                                                                <th>Wed</th>
+                                                                <th>Thu</th>
+                                                                <th>Fri</th>
+                                                                <th>Sat</th>
+                                                                <th>Sun</th>
+                                                            </tr>
+                                                            <tr>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td></td>
+                                                                <td valign="top" class="emp_Cells"><span class="spn_low_cell">1</span></td>
+                                                                <td valign="top" class="emp_Cells"><span class="spn_low_cell">2</span></td>
+                                                                <td valign="top" class="emp_Cells"><span class="spn_low_cell">3</span></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td valign="top" class="emp_Cells"><span class="spn_low_cell">4</span></td>
+                                                                <td valign="top" class="emp_Cells"><span class="spn_low_cell">5</span></td>
+                                                                <td valign="top" class="emp_Cells"><span class="spn_low_cell">6</span></td>
+                                                                <td valign="top" class="emp_Cells"><span class="spn_low_cell">7</span></td>
+                                                                <td valign="top" class="emp_Cells"><span class="spn_low_cell">8</span></td>
+                                                                <td valign="top" class="emp_Cells"><span class="spn_low_cell">9</span></td>
+                                                                <td valign="top" class="emp_Cells"><span class="spn_low_cell">10</span></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td valign="top" class="emp_Cells"><span class="spn_low_cell">11</span></td>
+                                                                <td valign="top" class="emp_Cells"><span class="spn_low_cell">12</span></td>
+                                                                <td valign="top" class="emp_Cells"><span class="spn_low_cell">13</span></td>
+                                                                <td valign="top" class="emp_Cells"><span class="spn_low_cell">14</span></td>
+                                                                <td valign="top" class="emp_Cells"><span class="spn_low_cell">15</span></td>
+                                                                <td valign="top" class="emp_Cells"><span class="spn_low_cell">16</span></td>
+                                                                <td valign="top" class="emp_Cells"><span class="spn_low_cell">17</span></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td valign="top" class="emp_Cells"><span class="spn_low_cell">18</span></td>
+                                                                <td valign="top" class="emp_Cells"><span class="spn_low_cell">19</span></td>
+                                                                <td valign="top" class="emp_Cells"><span class="spn_low_cell">20</span></td>
+                                                                <td valign="top" class="emp_Cells"><span class="spn_low_cell">21</span></td>
+                                                                <td valign="top" class="emp_Cells"><span class="spn_low_cell">22</span></td>
+                                                                <td valign="top" class="emp_Cells"><span class="spn_low_cell">23</span></td>
+                                                                <td valign="top" class="emp_Cells"><span class="spn_low_cell">24</span></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td valign="top" class="emp_Cells"><span class="spn_low_cell">25</span></td>
+                                                                <td valign="top" class="emp_Cells"><span class="spn_low_cell">26</span></td>
+                                                                <td valign="top" class="emp_Cells"><span class="spn_low_cell">27</span></td>
+                                                                <td valign="top" class="emp_Cells"><span class="spn_low_cell">28</span></td>
+                                                                <td valign="top" class="emp_Cells"><span class="spn_low_cell">29</span></td>
+                                                                <td valign="top" class="emp_Cells"><span class="spn_low_cell">30</span></td>
+                                                                <td valign="top" class="emp_Cells"><span class="spn_low_cell">31</span></td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field_detail">
+                            <div class="select_economy">
+                                <div class="economy">
+                                    <p class="search-traveler">1 PAX, ECONOMY</p>
+                                </div>
+                                <div class="pax-drop">
+                                    <p class="mb-0 text-left font-weight-600">ADULTS (12yrs +)</p>
+                                    <div aria-label="Page navigation example">
+                                        <ul class="pagination">
+                                            <li class="page-item active"><a class="page-link" href="javascript:void(0);">0</a></li>
+                                            <li class="page-item active"><a class="page-link" href="javascript:void(0);">1</a></li>
+                                            <li class="page-item"><a class="page-link" href="javascript:void(0);">2</a></li>
+                                            <li class="page-item"><a class="page-link" href="javascript:void(0);">3</a></li>
+                                            <li class="page-item"><a class="page-link" href="javascript:void(0);">4</a></li>
+                                            <li class="page-item"><a class="page-link" href="javascript:void(0);">5</a></li>
+                                            <li class="page-item"><a class="page-link" href="javascript:void(0);">6</a></li>
+                                            <li class="page-item"><a class="page-link" href="javascript:void(0);">7</a></li>
+                                            <li class="page-item"><a class="page-link" href="javascript:void(0);">8</a></li>
+                                            <li class="page-item"><a class="page-link" href="javascript:void(0);">9</a></li>
+
+                                        </ul>
+                                    </div>
+                                    <p class="mb-0 text-left font-weight-600">CHILDREN (2yrs - 12yrs )</p>
+                                    <div aria-label="Page navigation example">
+                                        <ul class="pagination">
+                                            <li class="page-item active"><a class="page-link" href="javascript:void(0);">0</a></li>
+                                            <li class="page-item"><a class="page-link" href="javascript:void(0);">1</a></li>
+                                            <li class="page-item"><a class="page-link" href="javascript:void(0);">2</a></li>
+                                            <li class="page-item"><a class="page-link" href="javascript:void(0);">3</a></li>
+                                            <li class="page-item"><a class="page-link" href="javascript:void(0);">4</a></li>
+                                            <li class="page-item"><a class="page-link" href="javascript:void(0);">5</a></li>
+                                            <li class="page-item"><a class="page-link" href="javascript:void(0);">6</a></li>
+                                            <li class="page-item"><a class="page-link" href="javascript:void(0);">7</a></li>
+                                            <li class="page-item"><a class="page-link" href="javascript:void(0);">8</a></li>
+                                            <li class="page-item disabled"><a class="page-link" href="javascript:void(0);">9</a></li>
+                                        </ul>
+                                    </div>
+
+                                    <p class="mb-0 text-left font-weight-600">INFANTS (below 2yrs)</p>
+                                    <div aria-label="Page navigation example">
+                                        <ul class="pagination">
+                                            <li class="page-item active"><a class="page-link" href="javascript:void(0);">0</a></li>
+                                            <li class="page-item"><a class="page-link" href="javascript:void(0);">1</a></li>
+                                            <li class="page-item disabled"><a class="page-link" href="javascript:void(0);">2</a></li>
+                                            <li class="page-item disabled"><a class="page-link" href="javascript:void(0);">3</a></li>
+                                            <li class="page-item disabled"><a class="page-link" href="javascript:void(0);">4</a></li>
+                                            <li class="page-item disabled"><a class="page-link" href="javascript:void(0);">5</a></li>
+                                            <li class="page-item disabled"><a class="page-link" href="javascript:void(0);">6</a></li>
+                                            <li class="page-item disabled"><a class="page-link" href="javascript:void(0);">7</a></li>
+                                            <li class="page-item disabled"><a class="page-link" href="javascript:void(0);">8</a></li>
+                                            <li class="page-item disabled"><a class="page-link" href="javascript:void(0);">9</a></li>
+
+                                        </ul>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-12 col-md-12">
+                                            <a href="javascript:void(0)" type="button" id="economy" class="btn btn-small lbl-small btn-secondary pl-1 pr-1 DOCClassActive btn-info">Economy</a>
+                                            <a href="javascript:void(0)" type="button" id="business" class="btn btn-small lbl-small btn-secondary pl-1 pr-1 DOCClass">Business</a>
+                                            <a href="javascript:void(0)" type="button" id="premiumeconomy" class="btn btn-small btn-secondary lbl-small pl-1 pr-1 DOCClass">Premium</a>
+                                            <a href="javascript:void(0)" type="button" id="firstclass" class="btn btn-small btn-secondary lbl-small pl-1 pr-1 DOCClass">First Class</a>
+                                        </div>
+                                    </div>
+                                    <div class="row mt-2">
+                                        <div class="col-12 col-md-12">
+                                            <input type="button" value="Done" class="btn btn-block btn-primary">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="blue_btn">
+                    <button>search</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="flight_schedule">
+        <div class="container">
+            <div class="section_wrapper">
+                <div class="time_schedule">
+                    <p class="small schedule_title">Depart Time <span>(GAU) - (DEL)</span></p>
+                    <div class="time_wrapper">
+                        <div class="arrival_time">
+                            <a href="javascript:void(0);">
+                                <i class="material-icons">brightness_4</i>
+                                <hr class="small_border">
+                                <span>00 - 06</span>
+                            </a>
+                        </div>
+                        <div class="arrival_time">
+                            <a href="javascript:void(0);">
+                                <i class="material-icons">brightness_5</i>
+                                <hr class="small_border">
+                                <span>06 - 12</span>
+                            </a>
+                        </div>
+                        <div class="arrival_time">
+                            <a href="javascript:void(0);">
+                                <i class="material-icons">filter_drama</i>
+                                <hr class="small_border">
+                                <span>12 - 18</span>
+                            </a>
+                        </div>
+                        <div class="arrival_time">
+                            <a href="javascript:void(0);">
+                                <i class="material-icons">brightness_2</i>
+                                <hr class="small_border">
+                                <span>18 - 00</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="time_schedule">
+                    <p class="small schedule_title">Depart Time <span>(GAU) - (DEL)</span></p>
+                    <div class="time_wrapper">
+                        <div class="depart_time">
+                            <a href="javascript:void(0);">
+                                <i class="material-icons">brightness_4</i>
+                                <hr class="small_border">
+                                <span>00 - 06</span>
+                            </a>
+                        </div>
+                        <div class="depart_time">
+                            <a href="javascript:void(0);">
+                                <i class="material-icons">brightness_5</i>
+                                <hr class="small_border">
+                                <span>06 - 12</span>
+                            </a>
+                        </div>
+                        <div class="depart_time">
+                            <a href="javascript:void(0);">
+                                <i class="material-icons">filter_drama</i>
+                                <hr class="small_border">
+                                <span>12 - 18</span>
+                            </a>
+                        </div>
+                        <div class="depart_time">
+                            <a href="javascript:void(0);">
+                                <i class="material-icons">brightness_2</i>
+                                <hr class="small_border">
+                                <span>18 - 00</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="flight_details">
+                    <div class="flight_stops">
+                        <p class="small">No. of Stops</p>
+                        <div class="custom-control">
+                            <input type="checkbox" name="" id="FlightStopfltr_0" class="custom-control-input">
+                            <label for="FlightStopfltr_0" class="custom-control-label"><span>Non-Stop</span></label>
+                        </div>
+                        <div class="custom-control">
+                            <input type="checkbox" name="" id="FlightStopfltr_1" class="custom-control-input">
+                            <label for="FlightStopfltr_1" class="custom-control-label"><span>1 Stop</span></label>
+                        </div>
+                        <div class="custom-control">
+                            <input type="checkbox" name="" id="FlightStopfltr_2" class="custom-control-input">
+                            <label for="FlightStopfltr_2" class="custom-control-label"><span>1 Change</span></label>
+                        </div>
+                    </div>
+                    <div class="flight_policy">
+                        <p class="small">Fare Policy</p>
+                        <div class="custom-control">
+                            <input type="checkbox" name="" id="FlightFarefltr_0" class="custom-control-input">
+                            <label for="FlightFarefltr_0" class="custom-control-label"><span>Refundable</span></label>
+                        </div>
+                    </div>
+                    <div class="flight_nub">
+                        <div class="">
+                            <input type="text" name="" id="txtAirNumer" class="">
+                            <i class="material-icons search_icon">search</i>
+                            <label for="txtAirNumer" class=""><span>Filter By Flight Number</span></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="select_airlines">
+        <div class="container">
+            <div class="section_wrapper">
+                <div class="search_airlines">
+                    <p class="small">Search By Airlines :</p>
+                    <div class="custom-control-wrapper">
+                        <div class="custom-control">
+                            <input type="checkbox" name="" id="Flightfltr_0" class="custom-control-input">
+                            <label for="Flightfltr_0" class="custom-control-label">
+                                <img class="" src="./image/6E.png">
+                                <span>IndiGo</span>
+                            </label>
+                        </div>
+                        <div class="custom-control">
+                            <input type="checkbox" name="" id="Flightfltr_1" class="custom-control-input">
+                            <label for="Flightfltr_1" class="custom-control-label">
+                                <img class="" src="./image/SG.png">
+                                <span>SpiceJet</span>
+                            </label>
+                        </div>
+                        <div class="custom-control">
+                            <input type="checkbox" name="" id="Flightfltr_2" class="custom-control-input">
+                            <label for="Flightfltr_2" class="custom-control-label">
+                                <img class="" src="./image/I5.png">
+                                <span>AirAsia India</span>
+                            </label>
+                        </div>
+                        <div class="custom-control">
+                            <input type="checkbox" name="" id="Flightfltr_3" class="custom-control-input">
+                            <label for="Flightfltr_3" class="custom-control-label">
+                                <img class="" src="./image/G8.png">
+                                <span>IndiGo</span>
+                            </label>
+                        </div>
+                        <div class="custom-control">
+                            <input type="checkbox" name="" id="Flightfltr_4" class="custom-control-input">
+                            <label for="Flightfltr_4" class="custom-control-label">
+                                <img class="" src="./image/UK.png">
+                                <span>Vistara</span>
+                            </label>
+                        </div>
+                        <div class="custom-control">
+                            <input type="checkbox" name="" id="Flightfltr_5" class="custom-control-input">
+                            <label for="Flightfltr_5" class="custom-control-label">
+                                <img class="" src="./image/AI.png">
+                                <span>IndiGo</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="price_filter">
+                    <i class="material-icons">more_horiz</i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="onword_flights_detail">
+        <div class="container">
+            <div class="section_wrapper">
+                <div class="flight_detail_title">
+                    <ul>
+                        <li>Airline</li>
+                        <li class="text_right">Depart</li>
+                        <li class="text_center">Duration</li>
+                        <li class="text_left">Arrive</li>
+                        <li class="text_right">Price</li>
+                    </ul>
+                </div>
+                <div class="onword_flight_info">
+                    <div class="flight_btn_tabs">
+                        <ul class="tabs">
+                            <li><a href="javascript:void(0);" class="active-tab-menu" data-tab="tabcontent_1">Flight Detail</a></li>
+                            <li><a href="javascript:void(0);" data-tab="tabcontent_2">Fare BreakUp</a></li>
+                            <li><a href="javascript:void(0);" data-tab="tabcontent_3">Baggage</a></li>
+                            <li><a href="javascript:void(0);" data-tab="tabcontent_4">Fare Policy</a></li>
+                        </ul>
+                        <div class="tab_content tabcontent_1 first-tab">
+                            <p class="refundable_text">Partially Refundable</p>
+                            <div class="flight_detail_list">
+                                <p class="city_name">22:10 - MUMBAI (BOM) <span> - Terminal: 2</span></p>
+                                <span class="travel_time">Travel time: 02:05</span>
+                                <p class="city_name">00:15 - DELHI (DEL) <span> - Terminal: 2</span></p>
+                                <p class="flight_name_detail">
+                                    <span>
+                                        <img src="./image/6E.png" alt="">
+                                    </span>
+                                    <span>INDIGO</span>
+                                    <span>6E - 2291</span>
+                                    <span>ECONOMY</span>
+                                    <span>- R (T)</span>
+                                    <span>320</span>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="tab_content tabcontent_2">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th class="text_left">Fare Breakup Summary <span>-5</span></th>
+                                        <th class="text_right">Amount INR</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            Basic Amount
+                                        </td>
+                                        <td>
+                                            2,470.00
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Tax Amount </td>
+                                        <td>1,530.00</td>
+                                    </tr>
+                                    <tr>
+                                        <td>YQ Amount </td>
+                                        <td>0.00</td>
+                                    </tr>
+                                    <tr>
+                                        <td>GST </td>
+                                        <td>0.00</td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td>Total Amount </td>
+                                        <td><span>4,000.00</span></td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                        <div class="tab_content tabcontent_3">
+                            <table>
+                                <thead class="fare_table_head">
+                                    <tr>
+                                        <th>Baggage Summary</th>
+                                        <th>Details</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Check In Baggage</td>
+                                        <td>
+                                            15 Kg (1 Piece Only) - EACH ADULT & CHILD
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Hand Baggage</td>
+                                        <td>7 Kg - EACH ADULT & CHILD</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="disclaimer_note">
+                                <span class="lbl-bold">Baggage Disclaimer:-</span>
+                                <p class="">
+                                    <b class="lbl-medium">. </b><b>Hand Baggage:</b> Airlines permits only one (1pc) bag weighing not more than 7 KGS. In addition to the one piece of Hand Baggage permitted, Few Airlines may permit Customer to carry one
+                                    additional personal article such as ladies purse or a small bag containing laptop not weighing more than 3 KGS.
+                                </p>
+                                <p class=""><b class="lbl-medium">. </b><b>Infant Baggage:</b> Passenger Traveling with <b>Infant</b> are allowed to carry <b>1 Pc of additional Hand Baggage</b> not exceeding 7 KGS. </p>
+                                <p class=""><b class="lbl-medium">.</b> The baggage information is just for reference, Please check with airline for more specific information. </p>
+                            </div>
+                        </div>
+                        <div class="tab_content tabcontent_4">
+                            <div class="charges_detail">
+                                <div class="cancellation_Charges_box">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th colspan="2">Cancellation Charges Per Pax</th>
+                                            </tr>
+                                            <tr class="text_left">
+                                                <th>Timeline</th>
+                                                <th>Penalty (Airline fee)</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td class="fare_tablealign_td_head">0 HOUR - 3 HOUR</td>
+                                                <td class="fare_tablealign_td_head">Non Refundable</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="fare_tablealign_td_head">3 HOUR - 365 DAYS</td>
+                                                <td class="fare_tablealign_td_head">₹ 2570.00</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <p>HappyFare Fee: <span class="lbl-bold">₹ 0 Per Pax (Applicable even if flight cancelled by Airline)</span></p>
+                                </div>
+                                <div class="reschedule_Charges_box">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th colspan="2">Reschedule Charges Per Pax</th>
+                                            </tr>
+                                            <tr class="text_left">
+                                                <th>Timeline</th>
+                                                <th>Penalty (Airline fee)</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td class="fare_tablealign_td_head">0 HOUR - 3 HOUR</td>
+                                                <td class="fare_tablealign_td_head">Non Refundable</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="fare_tablealign_td_head">3 HOUR - 365 DAYS</td>
+                                                <td class="fare_tablealign_td_head">₹ 2570.00</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <p>HappyFare Fee: <span class="lbl-bold">₹ 0 Per Pax (Applicable even if flight cancelled by Airline)</span></p>
+                                </div>
+                            </div>
+                            <div class="disclaimer_note">
+                                <span class="lbl-bold">Disclaimer :</span>
+                                <p class="mb-0"> <b class="lbl-medium">.</b><b> Check -in</b> for all Domestic Flights Closes 45 Minutes prior to the scheduled departure, Failure to check -in at least 45 minutes prior will result in the fare being forfeited.</p>
+                                <p class="mb-0"><b class="lbl-medium">.</b> If Ticket Fare is lower than Cancellation penalty then Basic Fare Plus Fuel Surcharge will be charged as cancellation Fee, only statutory taxes will be refunded.</p>
+                                <p class="mb-0"><b class="lbl-medium">.</b> Re-issue not advisable if Ticket fare is lower than Re-issue charges, better cancel and issue new ticket.</p>
+                                <p class="mb-0"><b class="lbl-medium">.</b><b> INFANT -</b> No Re-issue &amp; Cancel Fee applicable for Infant Ticket except for Air Asia, INFANT TICKETS ARE NON REFUNDABLE ON AIR ASIA, </p>
+                                <p class="mb-0"><b class="lbl-medium">.</b> Partial Cancellation is not allowed on tickets booked under special discounted Round trip fares.</p>
+                                <p class="mb-0"><b class="lbl-medium">.</b><b> No Show</b> means, if a ticket is not cancelled within the stipulated time.</p>
+                                <p class="mb-0"><b class="lbl-medium">.</b> Tickets booked under Sale / Promo Fare are Non Refundable, Above Cancel/Re-issue Penalty is applicable for Refundable Fares only, For Fares Marked as Non Refundable only statutory taxes will
+                                    be refunded.</p>
+                                <p class="mb-0"><b class="lbl-medium">.</b><b> Family Fare-</b> Cancellation in respect of the booking made under family fare shall only be permissible if minimum of four (04) passengers are retained in the booking.</p>
+                                <p class="mb-0"><b class="lbl-medium">.</b> ANY AMOUNT PAID TOWARDS SEAT, MEAL, EXTRA BAGGAGE BOOKING IN AIR ASIA ARE NON REFUNDABLE IN CASE OF TICKET CANCELLATION. </p>
+                                <p class="mb-0"><b class="lbl-medium">.</b> The above Fare Rules are just a guideline for your convenience and is subject to changes by the Airline from time to time.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
